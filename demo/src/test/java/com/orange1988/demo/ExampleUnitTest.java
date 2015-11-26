@@ -1,4 +1,4 @@
-package com.orange1988.photoselector;
+package com.orange1988.demo;
 
 import org.junit.Test;
 

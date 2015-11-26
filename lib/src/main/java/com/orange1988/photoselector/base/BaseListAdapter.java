@@ -27,11 +27,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
 
     @Override
     public int getCount() {
-        int count = 0;
-        if (items != null) {
-            count = items.size();
-        }
-        return count;
+        return items != null ? items.size() : 0;
     }
 
     @Override
@@ -46,6 +42,14 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
 
     public void setItems(List<T> items) {
         this.items = items;
+    }
+
+    public void appendItems(List<T> items) {
+        if (items != null) {
+            items.addAll(items);
+        } else {
+            this.items = items;
+        }
     }
 
     @Override

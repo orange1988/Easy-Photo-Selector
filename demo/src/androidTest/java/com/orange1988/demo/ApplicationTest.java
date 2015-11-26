@@ -1,4 +1,4 @@
-package com.orange1988.photoselector;
+package com.orange1988.demo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
