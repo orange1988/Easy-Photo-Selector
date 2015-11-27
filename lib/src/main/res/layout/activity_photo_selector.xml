@@ -9,4 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.orange1988.photoselector.ui.PhotoSelectorActivity">
 
+    <GridView
+        android:id="@+id/photos_gv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"></GridView>
+
 </RelativeLayout>
