@@ -6,7 +6,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import java.util.List;
 
 /**
- * Created by Ervin on 15/11/29.
+ * Created by Orange on 15/11/29.
  */
 public abstract class BaseLoader<T> extends AsyncTaskLoader<List<T>> {
 

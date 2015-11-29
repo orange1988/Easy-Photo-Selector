@@ -37,8 +37,8 @@ public class PhotoEntity {
         if (!(o instanceof PhotoEntity)) {
             return false;
         }
-        PhotoEntity pojo = (PhotoEntity) o;
-        if (path != null && path.equals(pojo.path)) {
+        PhotoEntity entity = (PhotoEntity) o;
+        if (path != null && path.equals(entity.path)) {
             return true;
         } else {
             return false;

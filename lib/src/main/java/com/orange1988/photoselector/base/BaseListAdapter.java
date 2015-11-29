@@ -14,11 +14,11 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
 
     public final String TAG = getClass().getSimpleName();
 
-    protected Context context;
+    protected Context mContext;
     protected List<T> items;
 
     public BaseListAdapter(Context context) {
-        this.context = context;
+        this.mContext = context;
     }
 
     public List<T> getItems() {

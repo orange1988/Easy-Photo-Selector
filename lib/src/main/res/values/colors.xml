@@ -2,5 +2,10 @@
 <resources>
 
     <color name="photo_mask">#3A000000</color>
+    <color name="bg_mask">#A0000000</color>
+    <color name="divider">#999999</color>
 
+    <color name="colorPrimary">@android:color/holo_orange_light</color>
+    <color name="colorPrimaryDark">@android:color/holo_orange_dark</color>
+    <color name="colorAccent">#FF4081</color>
 </resources>

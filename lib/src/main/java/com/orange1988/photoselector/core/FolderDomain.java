@@ -24,6 +24,7 @@ public class FolderDomain implements IDomain<FolderEntity> {
     protected Context mContext;
 
     public FolderDomain(Context context) {
+        contentResolver = context.getContentResolver();
         mContext = context;
     }
 

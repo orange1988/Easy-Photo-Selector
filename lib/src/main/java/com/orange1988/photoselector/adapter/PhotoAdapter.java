@@ -16,7 +16,6 @@ import com.orange1988.photoselector.view.PhotoItemView;
  */
 public class PhotoAdapter extends BaseListAdapter<PhotoEntity>{
 
-    private Context mContext;
     private PhotoItemView.IPhotoItem iPhotoItem;
     private int itemWidth;
     private AbsListView.LayoutParams itemLayoutParams;
@@ -24,7 +23,6 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity>{
 
     public PhotoAdapter(Context context, PhotoItemView.IPhotoItem iPhotoItem) {
         super(context);
-        this.mContext = context;
         this.iPhotoItem = iPhotoItem;
         this.initItemLayoutParams();
     }
@@ -62,7 +60,7 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity>{
 
     private void initItemLayoutParams() {
         int screenWidth = SystemUtils.getWidthPixels(mContext);
-        int horizontalSpacing = context.getResources().getDimensionPixelSize(R.dimen.photo_item_gv_horizontal_spacing);
+        int horizontalSpacing = this.mContext.getResources().getDimensionPixelSize(R.dimen.photo_item_gv_horizontal_spacing);
         this.itemWidth = (screenWidth - (horizontalSpacing * (NUM_COLUMNS - 1))) / NUM_COLUMNS;
         this.itemLayoutParams = new AbsListView.LayoutParams(itemWidth, itemWidth);
     }

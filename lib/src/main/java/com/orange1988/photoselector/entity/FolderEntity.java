@@ -32,4 +32,23 @@ public class FolderEntity {
         size++;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof FolderEntity)) {
+            return false;
+        }
+        FolderEntity entity = (FolderEntity) o;
+        if (name != null && name.equals(entity.name)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

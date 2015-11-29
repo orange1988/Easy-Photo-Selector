@@ -1,6 +1,7 @@
 package com.orange1988.photoselector.view;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,7 +13,7 @@ import com.squareup.picasso.Picasso;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class FolderItemView extends LinearLayout {
+public class FolderItemView extends LinearLayout implements View.OnClickListener {
 
 
     private ImageView imageView;
@@ -31,6 +32,7 @@ public class FolderItemView extends LinearLayout {
         titleTv = (TextView) findViewById(R.id.folder_title_tv);
         countTv = (TextView) findViewById(R.id.folder_count_tv);
         checkView = (ImageView) findViewById(R.id.folder_cb);
+        setOnClickListener(this);
     }
 
 
@@ -40,7 +42,7 @@ public class FolderItemView extends LinearLayout {
             return;
         }
         folderEntity.isChecked = selected;
-        setBtnChecked(checkView,selected);
+        setBtnChecked(checkView, selected);
     }
 
     public void setData(FolderEntity folderEntity, int position, final IFolderItem iFolderItem) {
@@ -48,10 +50,20 @@ public class FolderItemView extends LinearLayout {
         this.position = position;
         this.iFolderItem = iFolderItem;
         this.loadImage(folderEntity.path);
+        titleTv.setText(folderEntity.name);
+        countTv.setText(String.format(getContext().getResources().getString(R.string.photos_size),folderEntity.size ));
+        setBtnChecked(checkView, folderEntity.isChecked);
     }
 
     private void loadImage(String path) {
         Picasso.with(getContext()).load("file://" + path).resizeDimen(R.dimen.folder_item_image_size, R.dimen.folder_item_image_size).centerCrop().into(imageView);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (iFolderItem != null) {
+            iFolderItem.onItemClickListener(folderEntity, position);
+        }
     }
 
     public interface IFolderItem {

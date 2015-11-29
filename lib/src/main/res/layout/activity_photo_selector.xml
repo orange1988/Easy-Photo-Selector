@@ -1,20 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.orange1988.photoselector.ui.PhotoSelectorActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+    <RelativeLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary">
+
+        <Button
+            android:id="@+id/folder_selector_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
 
     <GridView
         android:id="@+id/photos_gv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_bar"
+        android:layout_below="@+id/toolbar"
         android:horizontalSpacing="@dimen/photo_item_gv_horizontal_spacing"
         android:numColumns="3"
-        android:verticalSpacing="@dimen/photo_item_gv_horizontal_spacing"></GridView>
+        android:verticalSpacing="@dimen/photo_item_gv_horizontal_spacing" />
+
+    <LinearLayout
+        android:id="@+id/folder_lv_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_bar"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/bg_mask"
+        android:visibility="gone">
+
+        <ListView
+            android:id="@+id/folder_lv"
+            android:divider="@color/divider"
+            android:dividerHeight="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="80dp" />
+    </LinearLayout>
+
 
 </RelativeLayout>

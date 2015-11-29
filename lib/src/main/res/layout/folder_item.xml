@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/albumitem_height"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:gravity="center_vertical">
 
 
     <ImageView
         android:id="@+id/folder_image_iv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/folder_item_image_size"
+        android:layout_height="@dimen/folder_item_image_size"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="4dp"
-        android:layout_marginRight="4dp"
+        android:layout_margin="4dp"
         android:scaleType="centerCrop" />
 
     <RelativeLayout
@@ -19,8 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/folder_image_iv"
-        android:gravity="center_vertical"
-        android:paddingLeft="5dp">
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,8 +36,8 @@
             <TextView
                 android:id="@+id/folder_count_tv"
                 android:layout_width="wrap_content"
-                android:textColor="@android:color/darker_gray"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
                 android:textSize="@dimen/folder_item_subtitle_size" />
         </LinearLayout>
 
