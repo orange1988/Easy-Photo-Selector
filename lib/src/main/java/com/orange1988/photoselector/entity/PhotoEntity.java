@@ -1,9 +1,9 @@
-package com.orange1988.photoselector.pojo;
+package com.orange1988.photoselector.entity;
 
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class PhotoPojo {
+public class PhotoEntity {
 
     public static final String FLAG_CAMERA_PATH = "orange1988_camera_path";
 
@@ -13,15 +13,15 @@ public class PhotoPojo {
 
     public boolean isChecked;
 
-    public PhotoPojo() {
+    public PhotoEntity() {
 
     }
 
-    public PhotoPojo(String name) {
+    public PhotoEntity(String name) {
         this.name = name;
     }
 
-    public PhotoPojo(String name, boolean isChecked) {
+    public PhotoEntity(String name, boolean isChecked) {
         this(name);
         this.isChecked = isChecked;
     }
@@ -34,10 +34,10 @@ public class PhotoPojo {
         if (o == null) {
             return false;
         }
-        if (!(o instanceof PhotoPojo)) {
+        if (!(o instanceof PhotoEntity)) {
             return false;
         }
-        PhotoPojo pojo = (PhotoPojo) o;
+        PhotoEntity pojo = (PhotoEntity) o;
         if (path != null && path.equals(pojo.path)) {
             return true;
         } else {

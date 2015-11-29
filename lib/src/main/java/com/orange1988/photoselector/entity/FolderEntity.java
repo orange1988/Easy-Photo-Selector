@@ -1,9 +1,9 @@
-package com.orange1988.photoselector.pojo;
+package com.orange1988.photoselector.entity;
 
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class FolderPojo {
+public class FolderEntity {
 
     public String name;
 
@@ -11,16 +11,16 @@ public class FolderPojo {
 
     public boolean isChecked;
 
-    public FolderPojo(String name) {
+    public FolderEntity(String name) {
         this.name = name;
     }
 
-    public FolderPojo(String name, int size) {
+    public FolderEntity(String name, int size) {
         this(name);
         this.size = size;
     }
 
-    public FolderPojo(String name, int size, boolean isChecked) {
+    public FolderEntity(String name, int size, boolean isChecked) {
         this(name, size);
         this.isChecked = isChecked;
     }

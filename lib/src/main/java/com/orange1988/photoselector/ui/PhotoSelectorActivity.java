@@ -6,27 +6,30 @@ import android.support.v4.content.Loader;
 import android.widget.GridView;
 
 import com.orange1988.photoselector.R;
+import com.orange1988.photoselector.adapter.PhotoAdapter;
 import com.orange1988.photoselector.base.BaseActivity;
 import com.orange1988.photoselector.manager.PhotoLoader;
 import com.orange1988.photoselector.manager.PhotoPojoDomain;
-import com.orange1988.photoselector.pojo.PhotoPojo;
+import com.orange1988.photoselector.entity.PhotoEntity;
+import com.orange1988.photoselector.view.PhotoItemView;
 
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
-public class PhotoSelectorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoPojo>> {
+public class PhotoSelectorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoEntity>>,PhotoItemView.IPhotoItemView {
 
     private PhotoLoader photoLoader;
     private PhotoPojoDomain photoPojoDomain;
+    private PhotoAdapter photoAdapter;
 
+    private int max_selected_size = 0;
+
+    public static final String KEY_MAX_SELECTED_SIZE = "KEY_MAX_SELECTED_SIZE";
     public static final String KEY_FOLDER_NAME = "KEY_FOLDER_NAME";
 
     private GridView photosGridView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         photoPojoDomain = new PhotoPojoDomain(this);
         photoLoader = new PhotoLoader(this, photoPojoDomain);
@@ -36,6 +39,8 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
     private void initViews() {
         photosGridView = (GridView) findViewById(R.id.photos_gv);
+        photoAdapter = new PhotoAdapter(this, this);
+        photosGridView.setAdapter(photoAdapter);
     }
 
     @Override
@@ -44,17 +49,18 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     }
 
     @Override
-    public Loader<List<PhotoPojo>> onCreateLoader(int id, Bundle args) {
+    public Loader<List<PhotoEntity>> onCreateLoader(int id, Bundle args) {
         return photoLoader;
     }
 
     @Override
-    public void onLoadFinished(Loader<List<PhotoPojo>> loader, List<PhotoPojo> data) {
-
+    public void onLoadFinished(Loader<List<PhotoEntity>> loader, List<PhotoEntity> data) {
+        photoAdapter.setItems(data);
+        photoAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(Loader<List<PhotoPojo>> loader) {
+    public void onLoaderReset(Loader<List<PhotoEntity>> loader) {
 
     }
 
@@ -62,5 +68,25 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
         Bundle bundle = new Bundle();
         bundle.putString(KEY_FOLDER_NAME, name);
         return bundle;
+    }
+
+    @Override
+    public int getSelectedLimit() {
+        return 0;
+    }
+
+    @Override
+    public void beyondSelectedLimit() {
+        //TODO 给予提示
+    }
+
+    @Override
+    public void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view, boolean isChecked) {
+
+    }
+
+    @Override
+    public void onItemClickListener(PhotoEntity photoEntity, int position) {
+
     }
 }

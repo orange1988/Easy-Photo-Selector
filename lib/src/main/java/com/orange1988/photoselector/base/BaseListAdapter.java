@@ -57,7 +57,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         final BaseViewHolder holder;
 
         if (convertView == null) {
-            convertView = View.inflate(context, getLayoutResource(), null);
+            convertView = getConvertView();
             holder = getViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -73,5 +73,5 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
 
     public abstract BaseViewHolder getViewHolder(View convertView);
 
-    public abstract int getLayoutResource();
+    public abstract View getConvertView();
 }

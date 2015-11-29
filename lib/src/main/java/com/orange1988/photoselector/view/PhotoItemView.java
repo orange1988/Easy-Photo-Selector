@@ -7,7 +7,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.orange1988.photoselector.R;
-import com.orange1988.photoselector.pojo.PhotoPojo;
+import com.orange1988.photoselector.entity.PhotoEntity;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Mr. Orange on 15/11/26.
@@ -17,7 +18,7 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
     private ImageButton checkView;
     private ImageView imageView;
     private View maskView;
-    private PhotoPojo photoPojo;
+    private PhotoEntity photoEntity;
 
     private IPhotoItemView iPhotoItemView;
 
@@ -25,6 +26,7 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
 
     public PhotoItemView(Context context) {
         super(context);
+        inflate(context, R.layout.photo_item, this);
         imageView = (ImageView) findViewById(R.id.photo_iv);
         maskView = findViewById(R.id.photo_mask);
         checkView = (ImageButton) findViewById(R.id.photo_cb);
@@ -32,30 +34,35 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if (iPhotoItemView == null || photoPojo == null) {
+        if (iPhotoItemView == null || photoEntity == null) {
             return;
         }
         if (v == imageView) {
-            iPhotoItemView.onItemClickListener(photoPojo, position);
+            iPhotoItemView.onItemClickListener(photoEntity, position);
         } else if (v == checkView) {
-            boolean isChecked = photoPojo.isChecked;
+            setSelected(photoEntity.isChecked);
         }
     }
 
     @Override
     public void setSelected(boolean selected) {
-        if (photoPojo == null) {
+        if (photoEntity == null) {
             return;
         }
         maskView.setVisibility(selected ? VISIBLE : INVISIBLE);
-        photoPojo.isChecked = selected;
-        setChecked(checkView, selected);
+        photoEntity.isChecked = selected;
+        setBtnChecked(checkView, selected);
     }
 
-    public void setIPhotoItemView(PhotoPojo photoPojo, int position, final IPhotoItemView iPhotoItemView) {
+    public void setIPhotoItemView(PhotoEntity photoPojo, int position, final IPhotoItemView iPhotoItemView) {
         this.iPhotoItemView = iPhotoItemView;
-        this.photoPojo = photoPojo;
+        this.photoEntity = photoPojo;
         this.position = position;
+        this.loadImage(photoPojo.path);
+    }
+
+    private void loadImage(String path) {
+        Picasso.with(getContext()).load("file://" + path).resize(160, 160).centerCrop().into(imageView);
     }
 
     public interface IPhotoItemView {
@@ -64,13 +71,13 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
 
         void beyondSelectedLimit();
 
-        void onCheckedChanged(PhotoPojo photoPojo, PhotoItemView view, boolean isChecked);
+        void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view, boolean isChecked);
 
-        void onItemClickListener(PhotoPojo photoPojo, int position);
+        void onItemClickListener(PhotoEntity photoEntity, int position);
 
     }
 
-    private void setChecked(ImageButton v, boolean isChecked) {
+    private void setBtnChecked(ImageButton v, boolean isChecked) {
         if (v == null) {
             return;
         }
