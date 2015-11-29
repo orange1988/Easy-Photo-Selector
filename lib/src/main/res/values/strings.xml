@@ -3,4 +3,6 @@
 
     <string name="all_photos">All Photos</string>
     <string name="photos_size">%d images</string>
+    <string name="complete">complete</string>
+    <string name="preview">preview</string>
 </resources>

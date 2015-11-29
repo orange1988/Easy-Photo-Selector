@@ -3,6 +3,9 @@ package com.orange1988.photoselector.ui;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
@@ -23,7 +26,7 @@ import com.orange1988.photoselector.view.PhotoItemView;
 
 import java.util.List;
 
-public class PhotoSelectorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoEntity>>, PhotoItemView.IPhotoItem,View.OnClickListener{
+public class PhotoSelectorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoEntity>>, PhotoItemView.IPhotoItem, View.OnClickListener {
 
     private PhotoLoader photoLoader;
     private PhotoDomain photoDomain;
@@ -41,6 +44,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
     private GridView photosGridView;
     private Button folderSelectorBtn;
+    private Button previewBtn;
     private ListView folderListView;
     private View folderListViewContainer;
 
@@ -62,9 +66,13 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     }
 
     private void initViews() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         folderSelectorBtn = (Button) findViewById(R.id.folder_selector_btn);
         folderSelectorBtn.setOnClickListener(this);
         folderSelectorBtn.setText(R.string.all_photos);
+        previewBtn = (Button) findViewById(R.id.preview_btn);
+        previewBtn.setOnClickListener(this);
         photosGridView = (GridView) findViewById(R.id.photos_gv);
         photoAdapter = new PhotoAdapter(this, this);
         photosGridView.setAdapter(photoAdapter);
@@ -77,6 +85,23 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     @Override
     protected int getLayoutId() {
         return R.layout.activity_photo_selector;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_photo_selector, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_complete) {
+            complete();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -126,7 +151,17 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     public void onClick(View v) {
         if (v == folderSelectorBtn) {
             setFolderListViewVisible();
+        } else if (v == previewBtn) {
+            preview();
         }
+    }
+
+    private void preview() {
+
+    }
+
+    private void complete() {
+
     }
 
     private class FolderLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<FolderEntity>> {
