@@ -13,8 +13,8 @@
         android:id="@+id/photos_gv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:horizontalSpacing="@dimen/item_horizontal_spacing"
+        android:horizontalSpacing="@dimen/photo_item_gv_horizontal_spacing"
         android:numColumns="3"
-        android:verticalSpacing="@dimen/item_horizontal_spacing"></GridView>
+        android:verticalSpacing="@dimen/photo_item_gv_horizontal_spacing"></GridView>
 
 </RelativeLayout>

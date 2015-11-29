@@ -17,15 +17,15 @@ import com.orange1988.photoselector.view.PhotoItemView;
 public class PhotoAdapter extends BaseListAdapter<PhotoEntity>{
 
     private Context mContext;
-    private PhotoItemView.IPhotoItemView iPhotoItemView;
+    private PhotoItemView.IPhotoItem iPhotoItem;
     private int itemWidth;
     private AbsListView.LayoutParams itemLayoutParams;
     private static final int NUM_COLUMNS = 3;
 
-    public PhotoAdapter(Context context, PhotoItemView.IPhotoItemView iPhotoItemView) {
+    public PhotoAdapter(Context context, PhotoItemView.IPhotoItem iPhotoItem) {
         super(context);
         this.mContext = context;
-        this.iPhotoItemView = iPhotoItemView;
+        this.iPhotoItem = iPhotoItem;
         this.initItemLayoutParams();
     }
 
@@ -33,7 +33,7 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity>{
     public void render(int position, BaseViewHolder baseHolder, PhotoEntity item) {
         if (baseHolder instanceof ViewHolder) {
             ViewHolder holder = (ViewHolder) baseHolder;
-            holder.photoItemView.setIPhotoItemView(item, position, iPhotoItemView);
+            holder.photoItemView.setData(item, position, iPhotoItem);
         }
     }
 
@@ -62,7 +62,7 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity>{
 
     private void initItemLayoutParams() {
         int screenWidth = SystemUtils.getWidthPixels(mContext);
-        int horizontalSpacing = context.getResources().getDimensionPixelSize(R.dimen.item_horizontal_spacing);
+        int horizontalSpacing = context.getResources().getDimensionPixelSize(R.dimen.photo_item_gv_horizontal_spacing);
         this.itemWidth = (screenWidth - (horizontalSpacing * (NUM_COLUMNS - 1))) / NUM_COLUMNS;
         this.itemLayoutParams = new AbsListView.LayoutParams(itemWidth, itemWidth);
     }

@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class PhotoPojoDomain {
+public class PhotoDomain {
 
     private ContentResolver contentResolver;
 
-    public PhotoPojoDomain(Context context) {
+    public PhotoDomain(Context context) {
         contentResolver = context.getContentResolver();
     }
 

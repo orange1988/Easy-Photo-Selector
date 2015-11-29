@@ -9,16 +9,16 @@ import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.adapter.PhotoAdapter;
 import com.orange1988.photoselector.base.BaseActivity;
 import com.orange1988.photoselector.manager.PhotoLoader;
-import com.orange1988.photoselector.manager.PhotoPojoDomain;
+import com.orange1988.photoselector.manager.PhotoDomain;
 import com.orange1988.photoselector.entity.PhotoEntity;
 import com.orange1988.photoselector.view.PhotoItemView;
 
 import java.util.List;
 
-public class PhotoSelectorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoEntity>>,PhotoItemView.IPhotoItemView {
+public class PhotoSelectorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoEntity>>,PhotoItemView.IPhotoItem {
 
     private PhotoLoader photoLoader;
-    private PhotoPojoDomain photoPojoDomain;
+    private PhotoDomain photoPojoDomain;
     private PhotoAdapter photoAdapter;
 
     private int max_selected_size = 0;
@@ -31,7 +31,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        photoPojoDomain = new PhotoPojoDomain(this);
+        photoPojoDomain = new PhotoDomain(this);
         photoLoader = new PhotoLoader(this, photoPojoDomain);
         initViews();
         getSupportLoaderManager().initLoader(0, null, this);

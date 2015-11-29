@@ -13,11 +13,11 @@ import java.util.List;
  */
 public class PhotoLoader extends AsyncTaskLoader<List<PhotoEntity>> {
 
-    private PhotoPojoDomain domain;
+    private PhotoDomain domain;
     private String folderName;
     private List<PhotoEntity> mPhotos;
 
-    public PhotoLoader(Context context, PhotoPojoDomain domain) {
+    public PhotoLoader(Context context, PhotoDomain domain) {
         super(context);
         this.domain = domain;
     }

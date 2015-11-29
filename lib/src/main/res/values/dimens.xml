@@ -3,10 +3,14 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="photo_item_gv_horizontal_spacing">2dp</dimen>
+    <dimen name="photo_item_check_btn_size">44dp</dimen>
+    <dimen name="photo_item_check_btn_padding">10dp</dimen>
 
-    <dimen name="item_horizontal_spacing">2dp</dimen>
-    <dimen name="item_check_btn_size">44dp</dimen>
-    <dimen name="item_check_btn_padding">10dp</dimen>
-
+    <dimen name="folder_item_image_size">88dp</dimen>
+    <dimen name="folder_item_check_btn_size">@dimen/photo_item_check_btn_size</dimen>
+    <dimen name="folder_item_check_btn_padding">@dimen/photo_item_check_btn_padding</dimen>
+    <dimen name="folder_item_title_size">18dp</dimen>
+    <dimen name="folder_item_subtitle_size">14dp</dimen>
 
 </resources>

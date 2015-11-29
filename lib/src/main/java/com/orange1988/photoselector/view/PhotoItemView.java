@@ -18,10 +18,9 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
     private ImageButton checkView;
     private ImageView imageView;
     private View maskView;
+
+    private IPhotoItem iPhotoItem;
     private PhotoEntity photoEntity;
-
-    private IPhotoItemView iPhotoItemView;
-
     private int position;
 
     public PhotoItemView(Context context) {
@@ -34,11 +33,11 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if (iPhotoItemView == null || photoEntity == null) {
+        if (iPhotoItem == null || photoEntity == null) {
             return;
         }
         if (v == imageView) {
-            iPhotoItemView.onItemClickListener(photoEntity, position);
+            iPhotoItem.onItemClickListener(photoEntity, position);
         } else if (v == checkView) {
             setSelected(photoEntity.isChecked);
         }
@@ -54,27 +53,15 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
         setBtnChecked(checkView, selected);
     }
 
-    public void setIPhotoItemView(PhotoEntity photoPojo, int position, final IPhotoItemView iPhotoItemView) {
-        this.iPhotoItemView = iPhotoItemView;
-        this.photoEntity = photoPojo;
+    public void setData(PhotoEntity photoEntity, int position, final IPhotoItem iPhotoItem) {
+        this.photoEntity = photoEntity;
         this.position = position;
-        this.loadImage(photoPojo.path);
+        this.iPhotoItem = iPhotoItem;
+        this.loadImage(photoEntity.path);
     }
 
     private void loadImage(String path) {
         Picasso.with(getContext()).load("file://" + path).resize(160, 160).centerCrop().into(imageView);
-    }
-
-    public interface IPhotoItemView {
-
-        int getSelectedLimit();
-
-        void beyondSelectedLimit();
-
-        void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view, boolean isChecked);
-
-        void onItemClickListener(PhotoEntity photoEntity, int position);
-
     }
 
     private void setBtnChecked(ImageButton v, boolean isChecked) {
@@ -85,4 +72,15 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
         v.setImageResource(res);
     }
 
+    public interface IPhotoItem {
+
+        int getSelectedLimit();
+
+        void beyondSelectedLimit();
+
+        void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view, boolean isChecked);
+
+        void onItemClickListener(PhotoEntity photoEntity, int position);
+
+    }
 }

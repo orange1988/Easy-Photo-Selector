@@ -9,6 +9,8 @@ public class FolderEntity {
 
     public int size;
 
+    public String path;
+
     public boolean isChecked;
 
     public FolderEntity(String name) {

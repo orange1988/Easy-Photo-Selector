@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/albumitem_height"
+    android:gravity="center_vertical">
 
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/folder_image_iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="4dp"
+        android:scaleType="centerCrop" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/folder_image_iv"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/folder_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/folder_item_title_size" />
+
+            <TextView
+                android:id="@+id/folder_count_tv"
+                android:layout_width="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/folder_item_subtitle_size" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/folder_cb"
+            android:layout_width="@dimen/folder_item_check_btn_size"
+            android:layout_height="@dimen/folder_item_check_btn_size"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/folder_item_check_btn_padding"
+            android:src="@drawable/icon_unchecked" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -19,14 +19,13 @@
 
     <ImageButton
         android:id="@+id/photo_cb"
-        android:layout_width="@dimen/item_check_btn_size"
-        android:layout_height="@dimen/item_check_btn_size"
+        android:layout_width="@dimen/photo_item_check_btn_size"
+        android:layout_height="@dimen/photo_item_check_btn_size"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@null"
-        android:padding="@dimen/item_check_btn_padding"
+        android:padding="@dimen/photo_item_check_btn_padding"
         android:scaleType="fitCenter"
         android:src="@drawable/icon_unchecked" />
-
 
 </RelativeLayout>
