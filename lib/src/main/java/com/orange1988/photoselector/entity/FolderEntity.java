@@ -22,9 +22,14 @@ public class FolderEntity {
         this.size = size;
     }
 
-    public FolderEntity(String name, int size, boolean isChecked) {
+    public FolderEntity(String name, int size, String path, boolean isChecked) {
         this(name, size);
+        this.path = path;
         this.isChecked = isChecked;
+    }
+
+    public void increaseSize() {
+        size++;
     }
 
 }

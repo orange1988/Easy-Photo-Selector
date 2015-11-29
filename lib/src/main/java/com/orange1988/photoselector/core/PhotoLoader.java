@@ -1,25 +1,25 @@
-package com.orange1988.photoselector.manager;
+package com.orange1988.photoselector.core;
 
 import android.content.Context;
-import android.support.v4.content.AsyncTaskLoader;
 import android.text.TextUtils;
 
+import com.orange1988.photoselector.base.BaseLoader;
+import com.orange1988.photoselector.base.IDomain;
 import com.orange1988.photoselector.entity.PhotoEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Mr. Orange on 15/11/27.
  */
-public class PhotoLoader extends AsyncTaskLoader<List<PhotoEntity>> {
+public class PhotoLoader extends BaseLoader<PhotoEntity> {
 
-    private PhotoDomain domain;
     private String folderName;
     private List<PhotoEntity> mPhotos;
 
-    public PhotoLoader(Context context, PhotoDomain domain) {
-        super(context);
-        this.domain = domain;
+    public PhotoLoader(Context context, IDomain domain) {
+        super(context, domain);
     }
 
     public void setFolderName(String name) {
@@ -28,10 +28,15 @@ public class PhotoLoader extends AsyncTaskLoader<List<PhotoEntity>> {
 
     @Override
     public List<PhotoEntity> loadInBackground() {
-        if (!TextUtils.isEmpty(folderName)) {
-            return domain.getPhotos(folderName);
+        if (domain instanceof PhotoDomain) {
+            PhotoDomain photoDomain = (PhotoDomain) domain;
+            if (!TextUtils.isEmpty(folderName)) {
+                return photoDomain.getItems(folderName);
+            } else {
+                return photoDomain.getItems();
+            }
         } else {
-            return domain.getLatestPhotos();
+            return new ArrayList<>();
         }
     }
 

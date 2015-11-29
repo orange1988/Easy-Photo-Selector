@@ -8,8 +8,8 @@ import android.widget.GridView;
 import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.adapter.PhotoAdapter;
 import com.orange1988.photoselector.base.BaseActivity;
-import com.orange1988.photoselector.manager.PhotoLoader;
-import com.orange1988.photoselector.manager.PhotoDomain;
+import com.orange1988.photoselector.core.PhotoLoader;
+import com.orange1988.photoselector.core.PhotoDomain;
 import com.orange1988.photoselector.entity.PhotoEntity;
 import com.orange1988.photoselector.view.PhotoItemView;
 
