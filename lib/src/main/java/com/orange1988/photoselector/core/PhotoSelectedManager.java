@@ -68,4 +68,14 @@ public class PhotoSelectedManager {
         return false;
     }
 
+    public List<PhotoEntity> copyPhotos() {
+        List<PhotoEntity> list = new ArrayList<>();
+        PhotoEntity newPhoto;
+        for (PhotoEntity photo : photos) {
+            newPhoto = photo.copy();
+            list.add(newPhoto);
+        }
+        return list;
+    }
+
 }

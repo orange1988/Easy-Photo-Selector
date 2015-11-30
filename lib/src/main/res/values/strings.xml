@@ -5,4 +5,5 @@
     <string name="photos_size">%d images</string>
     <string name="complete">complete</string>
     <string name="preview">preview</string>
+    <string name="select">select</string>
 </resources>

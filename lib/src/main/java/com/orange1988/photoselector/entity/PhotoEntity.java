@@ -50,11 +50,8 @@ public class PhotoEntity {
         }
     }
 
-    public PhotoEntity copy(PhotoEntity photoEntity) {
-        if (photoEntity == null) {
-            throw new IllegalArgumentException("the parameter can't be null");
-        }
-        return new PhotoEntity(photoEntity.name, photoEntity.path, photoEntity.isChecked);
+    public PhotoEntity copy() {
+        return new PhotoEntity(name, path, isChecked);
     }
 
 

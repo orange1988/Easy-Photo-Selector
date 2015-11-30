@@ -1,5 +1,6 @@
 package com.orange1988.photoselector.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -29,19 +30,17 @@ import java.util.List;
 
 public class PhotoSelectorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoEntity>>, PhotoItemView.IPhotoItem, View.OnClickListener {
 
+    public static final String KEY_MAX_SELECTED_SIZE = "KEY_MAX_SELECTED_SIZE";
+    public static final String KEY_FOLDER_NAME = "KEY_FOLDER_NAME";
+
     private PhotoLoader photoLoader;
-    private PhotoDomain photoDomain;
     private PhotoAdapter photoAdapter;
 
     private FolderLoader folderLoader;
-    private FolderDomain folderDomain;
     private FolderAdapter folderAdapter;
 
-
     private int max_selected_size;
-
-    public static final String KEY_MAX_SELECTED_SIZE = "KEY_MAX_SELECTED_SIZE";
-    public static final String KEY_FOLDER_NAME = "KEY_FOLDER_NAME";
+    private String folderName;
 
     private GridView photosGridView;
     private Button folderSelectorBtn;
@@ -52,10 +51,8 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        photoDomain = new PhotoDomain(this);
-        photoLoader = new PhotoLoader(this, photoDomain);
-        folderDomain = new FolderDomain(this);
-        folderLoader = new FolderLoader(this, folderDomain);
+        photoLoader = new PhotoLoader(this, new PhotoDomain(this));
+        folderLoader = new FolderLoader(this, new FolderDomain(this));
         initExtras();
         initViews();
         getSupportLoaderManager().initLoader(0, null, this);
@@ -149,7 +146,10 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
     @Override
     public void onItemClickListener(PhotoEntity photoEntity, int position) {
-
+        Intent intent = new Intent(this, PhotoPreviewActivity.class);
+        intent.putExtra(PhotoPreviewActivity.KEY_FOLDER_NAME, folderName);
+        intent.putExtra(PhotoPreviewActivity.KEY_PHOTO_POSITION, position);
+        startActivity(intent);
     }
 
     @Override
@@ -162,7 +162,9 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     }
 
     private void preview() {
-
+        Intent intent = new Intent(this, PhotoPreviewActivity.class);
+        intent.putExtra(PhotoPreviewActivity.KEY_IS_PREVIEW, true);
+        startActivity(intent);
     }
 
     private void complete() {
@@ -196,6 +198,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
             folderAdapter.update(folderEntity);
             folderAdapter.notifyDataSetChanged();
             folderSelectorBtn.setText(folderEntity.name);
+            folderName = folderEntity.name;
             setFolderListViewVisible();
             photoLoader.setFolderName(folderEntity.name);
             photoLoader.forceLoad();

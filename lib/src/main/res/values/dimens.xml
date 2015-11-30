@@ -13,4 +13,6 @@
     <dimen name="folder_item_title_size">18dp</dimen>
     <dimen name="folder_item_subtitle_size">14dp</dimen>
 
+    <dimen name="preview_item_image_size">360dp</dimen>
+
 </resources>
