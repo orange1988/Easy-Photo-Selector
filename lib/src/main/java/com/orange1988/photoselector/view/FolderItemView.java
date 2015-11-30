@@ -56,7 +56,7 @@ public class FolderItemView extends LinearLayout implements View.OnClickListener
     }
 
     private void loadImage(String path) {
-        Picasso.with(getContext()).load("file://" + path).resizeDimen(R.dimen.folder_item_image_size, R.dimen.folder_item_image_size).centerCrop().into(imageView);
+        Picasso.with(getContext()).load("file://" + path).placeholder(R.drawable.icon_photo_default).resizeDimen(R.dimen.folder_item_image_size, R.dimen.folder_item_image_size).centerCrop().into(imageView);
     }
 
     @Override

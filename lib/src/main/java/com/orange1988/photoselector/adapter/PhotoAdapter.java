@@ -14,7 +14,7 @@ import com.orange1988.photoselector.view.PhotoItemView;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class PhotoAdapter extends BaseListAdapter<PhotoEntity>{
+public class PhotoAdapter extends BaseListAdapter<PhotoEntity> {
 
     private PhotoItemView.IPhotoItem iPhotoItem;
     private int itemWidth;
@@ -45,6 +45,14 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity>{
         PhotoItemView view = new PhotoItemView(mContext);
         view.setLayoutParams(itemLayoutParams);
         return view;
+    }
+
+    public void update(PhotoEntity photoEntity) {
+        for (PhotoEntity photo : items) {
+            if (photo.equals(photoEntity)) {
+                photo.isChecked = photoEntity.isChecked;
+            }
+        }
     }
 
 

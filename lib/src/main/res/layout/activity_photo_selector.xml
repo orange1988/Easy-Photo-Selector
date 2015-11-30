@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
+        app:navigationIcon="@drawable/icon_arrow_back_white"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 
@@ -24,6 +25,7 @@
 
         <Button
             android:id="@+id/folder_selector_btn"
+            android:drawableRight="@drawable/icon_arrow_drop_up_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

@@ -26,6 +26,11 @@ public class PhotoEntity {
         this.isChecked = isChecked;
     }
 
+    public PhotoEntity(String name, String path, boolean isChecked) {
+        this(name, isChecked);
+        this.path = path;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -44,4 +49,13 @@ public class PhotoEntity {
             return false;
         }
     }
+
+    public PhotoEntity copy(PhotoEntity photoEntity) {
+        if (photoEntity == null) {
+            throw new IllegalArgumentException("the parameter can't be null");
+        }
+        return new PhotoEntity(photoEntity.name, photoEntity.path, photoEntity.isChecked);
+    }
+
+
 }

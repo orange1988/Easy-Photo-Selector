@@ -19,6 +19,7 @@ import com.orange1988.photoselector.core.FolderDomain;
 import com.orange1988.photoselector.core.FolderLoader;
 import com.orange1988.photoselector.core.PhotoDomain;
 import com.orange1988.photoselector.core.PhotoLoader;
+import com.orange1988.photoselector.core.PhotoSelectedManager;
 import com.orange1988.photoselector.entity.FolderEntity;
 import com.orange1988.photoselector.entity.PhotoEntity;
 import com.orange1988.photoselector.view.FolderItemView;
@@ -37,7 +38,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     private FolderAdapter folderAdapter;
 
 
-    private int max_selected_size = 0;
+    private int max_selected_size;
 
     public static final String KEY_MAX_SELECTED_SIZE = "KEY_MAX_SELECTED_SIZE";
     public static final String KEY_FOLDER_NAME = "KEY_FOLDER_NAME";
@@ -62,7 +63,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     }
 
     private void initExtras() {
-
+        max_selected_size = getIntent().getIntExtra(KEY_MAX_SELECTED_SIZE, 9);
     }
 
     private void initViews() {
@@ -129,7 +130,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
     @Override
     public int getSelectedLimit() {
-        return 0;
+        return max_selected_size;
     }
 
     @Override
@@ -138,8 +139,12 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     }
 
     @Override
-    public void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view, boolean isChecked) {
-
+    public void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view) {
+        if (photoEntity.isChecked) {
+            PhotoSelectedManager.getInstance().addPhoto(photoEntity);
+        } else {
+            PhotoSelectedManager.getInstance().remove(photoEntity);
+        }
     }
 
     @Override

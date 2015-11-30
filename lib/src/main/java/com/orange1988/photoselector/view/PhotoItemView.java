@@ -29,6 +29,8 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
         imageView = (ImageView) findViewById(R.id.photo_iv);
         maskView = findViewById(R.id.photo_mask);
         checkView = (ImageButton) findViewById(R.id.photo_cb);
+        imageView.setOnClickListener(this);
+        checkView.setOnClickListener(this);
     }
 
     @Override
@@ -39,7 +41,8 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
         if (v == imageView) {
             iPhotoItem.onItemClickListener(photoEntity, position);
         } else if (v == checkView) {
-            setSelected(photoEntity.isChecked);
+            setSelected(!photoEntity.isChecked);
+            iPhotoItem.onCheckedChanged(photoEntity, this);
         }
     }
 
@@ -58,10 +61,11 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
         this.position = position;
         this.iPhotoItem = iPhotoItem;
         this.loadImage(photoEntity.path);
+        this.setSelected(photoEntity.isChecked);
     }
 
     private void loadImage(String path) {
-        Picasso.with(getContext()).load("file://" + path).resize(160, 160).centerCrop().into(imageView);
+        Picasso.with(getContext()).load("file://" + path).placeholder(R.drawable.icon_photo_default).resize(160, 160).centerCrop().into(imageView);
     }
 
     private void setBtnChecked(ImageButton v, boolean isChecked) {
@@ -78,7 +82,7 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
 
         void beyondSelectedLimit();
 
-        void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view, boolean isChecked);
+        void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view);
 
         void onItemClickListener(PhotoEntity photoEntity, int position);
 
