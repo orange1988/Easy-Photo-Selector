@@ -1,14 +1,13 @@
 package com.orange1988.photoselector.ui;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.adapter.PreviewPagerAdapter;
@@ -24,17 +23,26 @@ import java.util.List;
 /**
  *
  */
-public class PhotoPreviewActivity extends BaseActivity implements PreviewItemVIew.IPreviewItem, ViewPager.OnPageChangeListener, LoaderManager.LoaderCallbacks<List<PhotoEntity>> {
+public class PhotoPreviewActivity extends BaseActivity implements View.OnClickListener, PreviewItemVIew.IPreviewItem, ViewPager.OnPageChangeListener, LoaderManager.LoaderCallbacks<List<PhotoEntity>> {
 
     public static final String KEY_IS_PREVIEW = "KEY_IS_PREVIEW";
     public static final String KEY_FOLDER_NAME = "KEY_FOLDER_NAME";
     public static final String KEY_PHOTO_POSITION = "KEY_PHOTO_POSITION";
+    public static final String KEY_MAX_SELECTED_SIZE = "KEY_MAX_SELECTED_SIZE";
 
     private PhotoLoader photoLoader;
     private ViewPager viewPager;
-    private PreviewPagerAdapter pagerAdapter;
-    private Button selectBtn;
+    private PreviewPagerAdapter adapter;
+    private Button completeBtn;
     private Toolbar toolbar;
+    private View bottomBar;
+    private View selectContainer;
+    private ImageView selectCb;
+
+    private int maxSelectedSize;
+    private int currentSelectedSize;
+    private int currentPosition;
+    private PhotoEntity photo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,10 +51,15 @@ public class PhotoPreviewActivity extends BaseActivity implements PreviewItemVIe
         boolean isPreview = getIntent().getBooleanExtra(KEY_IS_PREVIEW, false);
         if (isPreview) {
             List<PhotoEntity> list = PhotoSelectedManager.getInstance().copyPhotos();
-            pagerAdapter.setItems(list);
-            pagerAdapter.notifyDataSetChanged();
-            updateBar(0);
+            maxSelectedSize = currentSelectedSize = list.size();
+            adapter.setItems(list);
+            adapter.notifyDataSetChanged();
+            photo = adapter.getItem(0);
+            currentPosition = 0;
+            updateToolBar(currentPosition, currentSelectedSize);
+            updateBottomBar(adapter.getItem(currentPosition).isChecked);
         } else {
+            maxSelectedSize = getIntent().getIntExtra(KEY_MAX_SELECTED_SIZE, 9);
             String folderName = getIntent().getStringExtra(KEY_FOLDER_NAME);
             photoLoader = new PhotoLoader(this, new PhotoDomain(this));
             photoLoader.setFolderName(folderName);
@@ -63,14 +76,27 @@ public class PhotoPreviewActivity extends BaseActivity implements PreviewItemVIe
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        bottomBar = findViewById(R.id.bottom_bar);
+        completeBtn = (Button) findViewById(R.id.complete_btn);
+        completeBtn.setOnClickListener(this);
+        selectContainer = findViewById(R.id.select_container);
+        selectContainer.setOnClickListener(this);
+        selectCb = (ImageView) findViewById(R.id.select_cb);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        selectBtn = (Button) findViewById(R.id.select_btn);
-        pagerAdapter = new PreviewPagerAdapter(this, this);
+        adapter = new PreviewPagerAdapter(this, this);
         viewPager.setOffscreenPageLimit(3);
-        viewPager.setAdapter(pagerAdapter);
+        viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v == selectContainer) {
+            checkImage();
+        } else if (v == completeBtn) {
+            finish();
+        }
+    }
 
     @Override
     public Loader<List<PhotoEntity>> onCreateLoader(int id, Bundle args) {
@@ -80,10 +106,11 @@ public class PhotoPreviewActivity extends BaseActivity implements PreviewItemVIe
     @Override
     public void onLoadFinished(Loader<List<PhotoEntity>> loader, List<PhotoEntity> photos) {
         int position = getIntent().getIntExtra(KEY_PHOTO_POSITION, 0);
-        pagerAdapter.setItems(photos);
-        pagerAdapter.notifyDataSetChanged();
+        adapter.setItems(photos);
+        adapter.notifyDataSetChanged();
         viewPager.setCurrentItem(position, false);
-        updateBar(position);
+        currentSelectedSize = PhotoSelectedManager.getInstance().getPhotos().size();
+        updateToolBar(position, currentSelectedSize);
     }
 
     @Override
@@ -98,7 +125,10 @@ public class PhotoPreviewActivity extends BaseActivity implements PreviewItemVIe
 
     @Override
     public void onPageSelected(int position) {
-        updateBar(position);
+        photo = adapter.getItem(position);
+        currentPosition = position;
+        updateToolBar(position, currentSelectedSize);
+        updateBottomBar(photo.isChecked);
     }
 
     @Override
@@ -108,19 +138,47 @@ public class PhotoPreviewActivity extends BaseActivity implements PreviewItemVIe
 
     @Override
     public void onPhotoClickListener(PhotoEntity photo, int position) {
-
+        toggleBar();
     }
 
     @Override
     public int getMaxSelectedSize() {
-        return 0;
+        return maxSelectedSize;
     }
 
     private void toggleBar() {
+        int visible = toolbar.getVisibility();
+        if (visible == View.VISIBLE) {
+            toolbar.setVisibility(View.GONE);
+            bottomBar.setVisibility(View.GONE);
+        } else {
+            toolbar.setVisibility(View.VISIBLE);
+            bottomBar.setVisibility(View.VISIBLE);
+        }
 
     }
 
-    private void updateBar(int position) {
-        toolbar.setTitle((position + 1) + "/" + pagerAdapter.getCount());
+    private void updateToolBar(int position, int currentSelectedSize) {
+        toolbar.setTitle((position + 1) + "/" + adapter.getCount());
+        completeBtn.setText(currentSelectedSize + "/" + maxSelectedSize + " " + getResources().getString(R.string.complete));
     }
+
+    private void updateBottomBar(boolean isChecked) {
+        selectCb.setImageResource(isChecked ? R.drawable.icon_checked : R.drawable.icon_unchecked);
+    }
+
+    private void checkImage() {
+        boolean isChecked = photo.isChecked;
+        if (isChecked) {
+            photo.isChecked = !isChecked;
+            PhotoSelectedManager.getInstance().remove(photo);
+        } else {
+            photo.isChecked = !isChecked;
+            PhotoSelectedManager.getInstance().addPhoto(photo);
+        }
+        currentSelectedSize = PhotoSelectedManager.getInstance().getPhotos().size();
+        updateToolBar(currentPosition, currentSelectedSize);
+        updateBottomBar(photo.isChecked);
+    }
+
 }

@@ -36,6 +36,10 @@ public class PreviewPagerAdapter extends PagerAdapter {
         return photos == null ? 0 : photos.size();
     }
 
+    public PhotoEntity getItem(int position) {
+        return photos.get(position);
+    }
+
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         PreviewItemVIew view = mViews.get(position);

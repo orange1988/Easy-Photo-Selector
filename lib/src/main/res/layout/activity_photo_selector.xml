@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        app:titleTextColor="@android:color/white"
         app:navigationIcon="@drawable/icon_arrow_back_white"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextColor="@android:color/white" />
 
 
     <RelativeLayout
@@ -26,19 +26,19 @@
 
         <Button
             android:id="@+id/folder_selector_btn"
-            android:drawableRight="@drawable/icon_arrow_drop_up_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:drawableRight="@drawable/icon_arrow_drop_up_white" />
 
         <Button
             android:id="@+id/preview_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/preview"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:text="@string/preview" />
 
     </RelativeLayout>
 
@@ -49,6 +49,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_bar"
         android:layout_below="@+id/toolbar"
+        android:background="@android:color/black"
         android:horizontalSpacing="@dimen/photo_item_gv_horizontal_spacing"
         android:numColumns="3"
         android:verticalSpacing="@dimen/photo_item_gv_horizontal_spacing" />
@@ -64,11 +65,11 @@
 
         <ListView
             android:id="@+id/folder_lv"
-            android:divider="@color/divider"
-            android:dividerHeight="1dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="80dp" />
+            android:layout_marginTop="80dp"
+            android:divider="@color/divider"
+            android:dividerHeight="1dp" />
     </LinearLayout>
 
 

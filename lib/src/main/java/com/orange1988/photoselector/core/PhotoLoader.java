@@ -26,6 +26,10 @@ public class PhotoLoader extends BaseLoader<PhotoEntity> {
         this.folderName = name;
     }
 
+    public List<PhotoEntity> getPhotos() {
+        return mPhotos;
+    }
+
     @Override
     public List<PhotoEntity> loadInBackground() {
         if (domain instanceof PhotoDomain) {

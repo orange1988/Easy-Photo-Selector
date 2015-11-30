@@ -18,7 +18,22 @@
         android:background="@color/colorPrimary"
         app:navigationIcon="@drawable/icon_arrow_back_white"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@android:color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/complete_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/activity_horizontal_margin" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:id="@+id/bottom_bar"
@@ -27,16 +42,36 @@
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary">
 
-        <Button
-            android:id="@+id/select_btn"
+        <LinearLayout
+            android:id="@+id/select_container"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:drawableLeft="@drawable/icon_unchecked"
-            android:text="@string/select"
-            android:textColor="@android:color/white" />
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/select_cb"
+                android:layout_width="@dimen/preview_item_check_btn_size"
+                android:layout_height="@dimen/preview_item_check_btn_size"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_unchecked" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/compound_view_margin"
+                android:background="@null"
+                android:text="@string/select"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/btn_text_size" />
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 
