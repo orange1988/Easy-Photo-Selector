@@ -57,8 +57,8 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         final BaseViewHolder holder;
 
         if (convertView == null) {
-            convertView = getConvertView();
-            holder = getViewHolder(convertView);
+            convertView = getConvertView(position);
+            holder = getViewHolder(position, convertView);
             convertView.setTag(holder);
         } else {
             holder = (BaseViewHolder) convertView.getTag();
@@ -71,7 +71,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
 
     public abstract void render(int position, BaseViewHolder baseHolder, T item);
 
-    public abstract BaseViewHolder getViewHolder(View convertView);
+    public abstract BaseViewHolder getViewHolder(int position, View convertView);
 
-    public abstract View getConvertView();
+    public abstract View getConvertView(int position);
 }

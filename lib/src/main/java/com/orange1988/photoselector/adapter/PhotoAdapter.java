@@ -11,6 +11,8 @@ import com.orange1988.photoselector.entity.PhotoEntity;
 import com.orange1988.photoselector.util.SystemUtils;
 import com.orange1988.photoselector.view.PhotoItemView;
 
+import java.util.List;
+
 /**
  * Created by Mr. Orange on 15/11/26.
  */
@@ -19,12 +21,29 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity> {
     private PhotoItemView.IPhotoItem iPhotoItem;
     private int itemWidth;
     private AbsListView.LayoutParams itemLayoutParams;
+    private boolean isNeedCameraItem;
+
     private static final int NUM_COLUMNS = 3;
 
     public PhotoAdapter(Context context, PhotoItemView.IPhotoItem iPhotoItem) {
         super(context);
         this.iPhotoItem = iPhotoItem;
         this.initItemLayoutParams();
+    }
+
+    public void setItems(List<PhotoEntity> items, boolean isNeedCameraItem) {
+        this.isNeedCameraItem = isNeedCameraItem;
+        if (isNeedCameraItem) {
+            PhotoEntity photoEntity = new PhotoEntity();
+            photoEntity.path = PhotoItemView.FLAG_CAMERA;
+            items.add(0, photoEntity);
+        }
+        this.setItems(items);
+    }
+
+    @Override
+    public void setItems(List<PhotoEntity> items) {
+        super.setItems(items);
     }
 
     @Override
@@ -36,25 +55,16 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity> {
     }
 
     @Override
-    public BaseViewHolder getViewHolder(View convertView) {
+    public BaseViewHolder getViewHolder(int position, View convertView) {
         return new ViewHolder(convertView);
     }
 
     @Override
-    public View getConvertView() {
+    public View getConvertView(int position) {
         PhotoItemView view = new PhotoItemView(mContext);
         view.setLayoutParams(itemLayoutParams);
         return view;
     }
-
-    public void update(PhotoEntity photoEntity) {
-        for (PhotoEntity photo : items) {
-            if (photo.equals(photoEntity)) {
-                photo.isChecked = photoEntity.isChecked;
-            }
-        }
-    }
-
 
     private static class ViewHolder extends BaseViewHolder {
 
@@ -65,6 +75,7 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity> {
             this.photoItemView = (PhotoItemView) view;
         }
     }
+
 
     private void initItemLayoutParams() {
         int screenWidth = SystemUtils.getWidthPixels(mContext);

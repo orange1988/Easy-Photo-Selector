@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
@@ -109,7 +108,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<List<PhotoEntity>> loader, List<PhotoEntity> data) {
-        photoAdapter.setItems(data);
+        photoAdapter.setItems(data, isInAllPhotosFolder());
         photoAdapter.notifyDataSetChanged();
         photosGridView.smoothScrollToPosition(0);
         updateToolBarAndBottomBar();
@@ -149,6 +148,11 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     }
 
     @Override
+    public void onCameraItemClick() {
+        //TODO
+    }
+
+    @Override
     public void onClick(View v) {
         if (v == folderSelectorBtn) {
             setFolderListViewVisible();
@@ -161,10 +165,6 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
         Intent intent = new Intent(this, PhotoPreviewActivity.class);
         intent.putExtra(PhotoPreviewActivity.KEY_IS_PREVIEW, true);
         startActivityForResult(intent, REQ_CODE_PREVIEW);
-    }
-
-    private void complete() {
-
     }
 
     private void setFolderListViewVisible() {
@@ -199,6 +199,13 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
             completeBtn.setText(currentSelectedSize + "/" + maxSelectedSize + " " + getResources().getString(R.string.complete));
             previewBtn.setEnabled(true);
         }
+    }
+
+    private boolean isInAllPhotosFolder() {
+        if (!TextUtils.isEmpty(folderName) && !folderName.equals(getResources().getString(R.string.all_photos))) {
+            return false;
+        }
+        return true;
     }
 
     private class FolderLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<FolderEntity>> {

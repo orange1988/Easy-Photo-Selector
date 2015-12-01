@@ -4,9 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -74,7 +73,6 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void initViews() {
         super.initViews();
-        toolbar.setTitle("");
         bottomBar = findViewById(R.id.bottom_bar);
         selectContainer = findViewById(R.id.select_container);
         selectContainer.setOnClickListener(this);
@@ -101,6 +99,10 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onLoadFinished(Loader<List<PhotoEntity>> loader, List<PhotoEntity> photos) {
         int position = getIntent().getIntExtra(KEY_PHOTO_POSITION, 0);
+        String folderName = getIntent().getStringExtra(KEY_FOLDER_NAME);
+        if (TextUtils.isEmpty(folderName) || folderName.equals(getResources().getString(R.string.all_photos))) {
+            position = position - 1;
+        }
         adapter.setItems(photos);
         adapter.notifyDataSetChanged();
         viewPager.setCurrentItem(position, false);

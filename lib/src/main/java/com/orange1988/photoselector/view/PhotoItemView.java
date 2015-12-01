@@ -24,6 +24,8 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
     private PhotoEntity photoEntity;
     private int position;
 
+    public static final String FLAG_CAMERA = "FLAG_CAMERA_ORANGE_1988_@_2015_12_01";
+
     public PhotoItemView(Context context) {
         super(context);
         inflate(context, R.layout.photo_item, this);
@@ -40,7 +42,11 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
             return;
         }
         if (v == imageView) {
-            iPhotoItem.onItemClickListener(photoEntity, position);
+            if (photoEntity.path != null && photoEntity.path.equals(FLAG_CAMERA)) {
+                iPhotoItem.onCameraItemClick();
+            } else {
+                iPhotoItem.onItemClickListener(photoEntity, position);
+            }
         } else if (v == checkView) {
             if (PhotoSelectedManager.getInstance().getPhotos().size() >= iPhotoItem.getSelectedLimit() && !photoEntity.isChecked) {
                 iPhotoItem.beyondSelectedLimit();
@@ -72,7 +78,13 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
     }
 
     private void loadImage(String path) {
-        Picasso.with(getContext()).load("file://" + path).placeholder(R.drawable.icon_photo_default).resize(160, 160).centerCrop().into(imageView);
+        if (path != null && path.equals(FLAG_CAMERA)) {
+            imageView.setImageResource(R.drawable.icon_photo_default);
+            checkView.setVisibility(GONE);
+        } else {
+            Picasso.with(getContext()).load("file://" + path).placeholder(R.drawable.icon_photo_default).resize(160, 160).centerCrop().into(imageView);
+            checkView.setVisibility(VISIBLE);
+        }
     }
 
     private void setBtnChecked(ImageButton v, boolean isChecked) {
@@ -92,6 +104,8 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
         void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view);
 
         void onItemClickListener(PhotoEntity photoEntity, int position);
+
+        void onCameraItemClick();
 
     }
 }

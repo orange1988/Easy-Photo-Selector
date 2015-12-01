@@ -29,12 +29,12 @@ public class FolderAdapter extends BaseListAdapter<FolderEntity> {
     }
 
     @Override
-    public BaseViewHolder getViewHolder(View convertView) {
-        return new ViewHolder(convertView);
+    public BaseViewHolder getViewHolder(int position, View convertView) {
+        return new ViewHolder( convertView);
     }
 
     @Override
-    public View getConvertView() {
+    public View getConvertView(int position) {
         return new FolderItemView(mContext);
     }
 
