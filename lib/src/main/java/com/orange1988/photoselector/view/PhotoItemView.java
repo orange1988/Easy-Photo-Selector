@@ -42,12 +42,14 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
         if (v == imageView) {
             iPhotoItem.onItemClickListener(photoEntity, position);
         } else if (v == checkView) {
-            if (PhotoSelectedManager.getInstance().getPhotos().size() >= iPhotoItem.getSelectedLimit()) {
+            if (PhotoSelectedManager.getInstance().getPhotos().size() >= iPhotoItem.getSelectedLimit() && !photoEntity.isChecked) {
                 iPhotoItem.beyondSelectedLimit();
                 return;
+            } else {
+                setSelected(!photoEntity.isChecked);
+                iPhotoItem.onCheckedChanged(photoEntity, this);
             }
-            setSelected(!photoEntity.isChecked);
-            iPhotoItem.onCheckedChanged(photoEntity, this);
+
         }
     }
 
