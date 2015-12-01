@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.adapter.PreviewPagerAdapter;
@@ -33,8 +34,6 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
     private PhotoLoader photoLoader;
     private ViewPager viewPager;
     private PreviewPagerAdapter adapter;
-    private Button completeBtn;
-    private Toolbar toolbar;
     private View bottomBar;
     private View selectContainer;
     private ImageView selectCb;
@@ -72,13 +71,11 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
         return R.layout.activity_photo_preview;
     }
 
-    private void initViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+    @Override
+    protected void initViews() {
+        super.initViews();
         toolbar.setTitle("");
-        setSupportActionBar(toolbar);
         bottomBar = findViewById(R.id.bottom_bar);
-        completeBtn = (Button) findViewById(R.id.complete_btn);
-        completeBtn.setOnClickListener(this);
         selectContainer = findViewById(R.id.select_container);
         selectContainer.setOnClickListener(this);
         selectCb = (ImageView) findViewById(R.id.select_cb);
@@ -93,8 +90,6 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         if (v == selectContainer) {
             checkImage();
-        } else if (v == completeBtn) {
-            finish();
         }
     }
 
@@ -159,7 +154,7 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void updateToolBar(int position, int currentSelectedSize) {
-        toolbar.setTitle((position + 1) + "/" + adapter.getCount());
+        titleView.setText((position + 1) + "/" + adapter.getCount());
         completeBtn.setText(currentSelectedSize + "/" + maxSelectedSize + " " + getResources().getString(R.string.complete));
     }
 
@@ -168,11 +163,16 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void checkImage() {
+
         boolean isChecked = photo.isChecked;
         if (isChecked) {
             photo.isChecked = !isChecked;
             PhotoSelectedManager.getInstance().remove(photo);
         } else {
+            if (PhotoSelectedManager.getInstance().getPhotos().size() >= maxSelectedSize) {
+                Toast.makeText(this, String.format(getResources().getString(R.string.beyond_max_size), maxSelectedSize), Toast.LENGTH_SHORT).show();
+                return;
+            }
             photo.isChecked = !isChecked;
             PhotoSelectedManager.getInstance().addPhoto(photo);
         }
@@ -181,4 +181,19 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
         updateBottomBar(photo.isChecked);
     }
 
+    private void quitActivity() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    @Override
+    protected void onBackBtnPressed() {
+        super.onBackBtnPressed();
+        quitActivity();
+    }
+
+    @Override
+    protected void onCompleteBtnPressed() {
+        super.onCompleteBtnPressed();
+    }
 }

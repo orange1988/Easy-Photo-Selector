@@ -3,7 +3,9 @@
 
     <string name="all_photos">All Photos</string>
     <string name="photos_size">%d images</string>
-    <string name="complete">complete</string>
-    <string name="preview">preview</string>
-    <string name="select">select</string>
+    <string name="complete">Complete</string>
+    <string name="preview">Preview</string>
+    <string name="select">Select</string>
+    <string name="select_photo">Select photos</string>
+    <string name="beyond_max_size">You can\'t choose more than %d photos.</string>
 </resources>

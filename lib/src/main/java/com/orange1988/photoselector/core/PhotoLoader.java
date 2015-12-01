@@ -3,6 +3,7 @@ package com.orange1988.photoselector.core;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.base.BaseLoader;
 import com.orange1988.photoselector.base.IDomain;
 import com.orange1988.photoselector.entity.PhotoEntity;
@@ -34,7 +35,7 @@ public class PhotoLoader extends BaseLoader<PhotoEntity> {
     public List<PhotoEntity> loadInBackground() {
         if (domain instanceof PhotoDomain) {
             PhotoDomain photoDomain = (PhotoDomain) domain;
-            if (!TextUtils.isEmpty(folderName)) {
+            if (!TextUtils.isEmpty(folderName) && !folderName.equals(getContext().getResources().getString(R.string.all_photos))) {
                 return photoDomain.getItems(folderName);
             } else {
                 return photoDomain.getItems();
@@ -85,6 +86,7 @@ public class PhotoLoader extends BaseLoader<PhotoEntity> {
 
         List<PhotoEntity> oldPhotos = photos;
         mPhotos = photos;
+
         if (isStarted()) {
             super.deliverResult(photos);
         }

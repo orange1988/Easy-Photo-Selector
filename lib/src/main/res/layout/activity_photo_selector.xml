@@ -12,9 +12,35 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
+        android:title="@string/select_photo"
         app:navigationIcon="@drawable/icon_arrow_back_white"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@android:color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_centerVertical="true"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_photo"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/complete_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="@string/complete" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
 
 
     <RelativeLayout

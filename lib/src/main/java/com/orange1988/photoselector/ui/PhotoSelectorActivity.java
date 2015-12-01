@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.adapter.FolderAdapter;
@@ -33,13 +33,16 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     public static final String KEY_MAX_SELECTED_SIZE = "KEY_MAX_SELECTED_SIZE";
     public static final String KEY_FOLDER_NAME = "KEY_FOLDER_NAME";
 
+    public static final int REQ_CODE_PREVIEW = 1;
+    public static final int REQ_CODE_ALL = 2;
+
     private PhotoLoader photoLoader;
     private PhotoAdapter photoAdapter;
 
     private FolderLoader folderLoader;
     private FolderAdapter folderAdapter;
 
-    private int max_selected_size;
+    private int maxSelectedSize;
     private String folderName;
 
     private GridView photosGridView;
@@ -60,12 +63,12 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     }
 
     private void initExtras() {
-        max_selected_size = getIntent().getIntExtra(KEY_MAX_SELECTED_SIZE, 9);
+        maxSelectedSize = getIntent().getIntExtra(KEY_MAX_SELECTED_SIZE, 9);
     }
 
-    private void initViews() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    @Override
+    protected void initViews() {
+        super.initViews();
         folderSelectorBtn = (Button) findViewById(R.id.folder_selector_btn);
         folderSelectorBtn.setOnClickListener(this);
         folderSelectorBtn.setText(R.string.all_photos);
@@ -87,19 +90,16 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_photo_selector, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_complete) {
-            complete();
-            return true;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQ_CODE_PREVIEW:
+            case REQ_CODE_ALL:
+                updatePhotosSelected();
+                break;
+            default:
+                break;
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -112,6 +112,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
         photoAdapter.setItems(data);
         photoAdapter.notifyDataSetChanged();
         photosGridView.smoothScrollToPosition(0);
+        updateToolBarAndBottomBar();
     }
 
     @Override
@@ -119,20 +120,14 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
     }
 
-    private Bundle generateBundleWithAlbumName(String name) {
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_FOLDER_NAME, name);
-        return bundle;
-    }
-
     @Override
     public int getSelectedLimit() {
-        return max_selected_size;
+        return maxSelectedSize;
     }
 
     @Override
     public void beyondSelectedLimit() {
-        //TODO 给予提示
+        Toast.makeText(this, String.format(getResources().getString(R.string.beyond_max_size), maxSelectedSize), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -142,6 +137,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
         } else {
             PhotoSelectedManager.getInstance().remove(photoEntity);
         }
+        updateToolBarAndBottomBar();
     }
 
     @Override
@@ -149,7 +145,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
         Intent intent = new Intent(this, PhotoPreviewActivity.class);
         intent.putExtra(PhotoPreviewActivity.KEY_FOLDER_NAME, folderName);
         intent.putExtra(PhotoPreviewActivity.KEY_PHOTO_POSITION, position);
-        startActivity(intent);
+        startActivityForResult(intent, REQ_CODE_ALL);
     }
 
     @Override
@@ -164,11 +160,45 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     private void preview() {
         Intent intent = new Intent(this, PhotoPreviewActivity.class);
         intent.putExtra(PhotoPreviewActivity.KEY_IS_PREVIEW, true);
-        startActivity(intent);
+        startActivityForResult(intent, REQ_CODE_PREVIEW);
     }
 
     private void complete() {
 
+    }
+
+    private void setFolderListViewVisible() {
+        int visibility = folderListViewContainer.getVisibility();
+        if (visibility == View.VISIBLE) {
+            folderListViewContainer.setVisibility(View.GONE);
+        } else if (visibility == View.GONE) {
+            folderListViewContainer.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void updatePhotosSelected() {
+        for (PhotoEntity photo : photoLoader.getPhotos()) {
+            if (PhotoSelectedManager.getInstance().contain(photo)) {
+                photo.isChecked = true;
+            } else {
+                photo.isChecked = false;
+            }
+        }
+        photoAdapter.notifyDataSetChanged();
+        updateToolBarAndBottomBar();
+    }
+
+    private void updateToolBarAndBottomBar() {
+        int currentSelectedSize = PhotoSelectedManager.getInstance().getPhotos().size();
+        if (currentSelectedSize == 0) {
+            completeBtn.setEnabled(false);
+            completeBtn.setText(R.string.complete);
+            previewBtn.setEnabled(false);
+        } else {
+            completeBtn.setEnabled(true);
+            completeBtn.setText(currentSelectedSize + "/" + maxSelectedSize + " " + getResources().getString(R.string.complete));
+            previewBtn.setEnabled(true);
+        }
     }
 
     private class FolderLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<FolderEntity>> {
@@ -205,12 +235,16 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
         }
     }
 
-    private void setFolderListViewVisible() {
-        int visibility = folderListViewContainer.getVisibility();
-        if (visibility == View.VISIBLE) {
-            folderListViewContainer.setVisibility(View.GONE);
-        } else if (visibility == View.GONE) {
-            folderListViewContainer.setVisibility(View.VISIBLE);
-        }
+    @Override
+    protected void onBackBtnPressed() {
+        super.onBackBtnPressed();
+        finish();
+    }
+
+    @Override
+    protected void onCompleteBtnPressed() {
+        super.onCompleteBtnPressed();
+        setResult(RESULT_OK);
+        finish();
     }
 }
