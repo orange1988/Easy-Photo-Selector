@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">demo</string>
+    <string name="app_name">Photo Selector</string>
     <string name="action_settings">Settings</string>
     <string name="title_photo_selector_activity">选取照片</string>
     <string name="title_photo_preview_activity">预览照片</string>

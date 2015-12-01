@@ -9,10 +9,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
 
+import com.orange1988.photoselector.adapter.PhotoAdapter;
+import com.orange1988.photoselector.core.PhotoSelectedManager;
 import com.orange1988.photoselector.ui.PhotoSelectorActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    private GridView gridView;
+    private PhotoAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,30 +27,36 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        gridView = (GridView) findViewById(R.id.gridView);
+        adapter = new PhotoAdapter(this, null);
+        gridView.setAdapter(adapter);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, PhotoSelectorActivity.class));
+                startActivityForResult(new Intent(MainActivity.this, PhotoSelectorActivity.class), 0);
             }
         });
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        adapter.setItems(PhotoSelectedManager.getInstance().getPhotos());
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
