@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">图片选择器</string>
+    <string name="all_photos">所有照片</string>
+    <string name="photos_size">%d张图片</string>
+    <string name="complete">完成</string>
+    <string name="preview">预览</string>
+    <string name="select">选择</string>
+    <string name="select_photo">选择图片</string>
+    <string name="beyond_max_size">你不能选择超过%d图片</string>
+</resources>

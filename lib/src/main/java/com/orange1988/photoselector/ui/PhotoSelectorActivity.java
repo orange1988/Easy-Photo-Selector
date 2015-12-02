@@ -58,8 +58,6 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        photoLoader = new PhotoLoader(this, new PhotoDomain(this));
-        folderLoader = new FolderLoader(this, new FolderDomain(this));
         initExtras();
         initViews();
         getSupportLoaderManager().initLoader(0, null, this);
@@ -103,11 +101,12 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
                     if (!TextUtils.isEmpty(path)) {
                         PhotoEntity photo = new PhotoEntity();
                         photo.path = path;
+                        photo.isChecked = true;
                         notifyImageMedia(path);
+                        PhotoSelectedManager.getInstance().clear();
+                        PhotoSelectedManager.getInstance().addPhoto(photo);
+                        onBackBtnPressed();
                         getSupportLoaderManager().restartLoader(0, null, this);
-//                        PhotoSelectedManager.getInstance().clear();
-//                        PhotoSelectedManager.getInstance().addPhoto(photo);
-//                        onCompleteBtnPressed();
                     }
                 } else if (resultCode == RESULT_CANCELED) {
                     // User cancelled the image capture
@@ -126,6 +125,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
     @Override
     public Loader<List<PhotoEntity>> onCreateLoader(int id, Bundle args) {
+        photoLoader = new PhotoLoader(this, new PhotoDomain(this));
         return photoLoader;
     }
 
@@ -139,7 +139,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
     @Override
     public void onLoaderReset(Loader<List<PhotoEntity>> loader) {
-
+        photoAdapter.setItems(null);
     }
 
     @Override
@@ -271,6 +271,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
         @Override
         public Loader<List<FolderEntity>> onCreateLoader(int id, Bundle args) {
+            folderLoader = new FolderLoader(PhotoSelectorActivity.this, new FolderDomain(PhotoSelectorActivity.this));
             return folderLoader;
         }
 
