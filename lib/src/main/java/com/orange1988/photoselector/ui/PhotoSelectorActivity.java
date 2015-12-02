@@ -1,7 +1,11 @@
 package com.orange1988.photoselector.ui;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
@@ -25,12 +29,13 @@ import com.orange1988.photoselector.entity.PhotoEntity;
 import com.orange1988.photoselector.view.FolderItemView;
 import com.orange1988.photoselector.view.PhotoItemView;
 
+import java.io.File;
 import java.util.List;
 
 public class PhotoSelectorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoEntity>>, PhotoItemView.IPhotoItem, View.OnClickListener {
 
     public static final String KEY_MAX_SELECTED_SIZE = "KEY_MAX_SELECTED_SIZE";
-    public static final String KEY_FOLDER_NAME = "KEY_FOLDER_NAME";
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 200;
 
     public static final int REQ_CODE_PREVIEW = 1;
     public static final int REQ_CODE_ALL = 2;
@@ -92,6 +97,24 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+            case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    String path = getPhotoTakenFilePath();
+                    if (!TextUtils.isEmpty(path)) {
+                        PhotoEntity photo = new PhotoEntity();
+                        photo.path = path;
+                        notifyImageMedia(path);
+                        getSupportLoaderManager().restartLoader(0, null, this);
+//                        PhotoSelectedManager.getInstance().clear();
+//                        PhotoSelectedManager.getInstance().addPhoto(photo);
+//                        onCompleteBtnPressed();
+                    }
+                } else if (resultCode == RESULT_CANCELED) {
+                    // User cancelled the image capture
+                } else {
+                    // Image capture failed, advise user
+                }
+                break;
             case REQ_CODE_PREVIEW:
             case REQ_CODE_ALL:
                 updatePhotosSelected();
@@ -149,7 +172,43 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
     @Override
     public void onCameraItemClick() {
-        //TODO
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri fileUri = makePhotoTakenFileUri(); // create a file to save the image
+        intent.putExtra("return_data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+
+    private Uri makePhotoTakenFileUri() {
+        String fileName = System.currentTimeMillis() + ".jpg";
+        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, fileName);
+            return getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        } else {
+            return Uri.fromFile(new File(fileName));
+        }
+    }
+
+    private String getPhotoTakenFilePath() {
+        String pathResult = null;
+        Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.ImageColumns._ID, MediaStore.Images.ImageColumns.DATA},
+                null, null, MediaStore.Images.ImageColumns._ID + " DESC");
+        if (cursor != null) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            pathResult = cursor.getString(column_index);
+            cursor.close();
+        }
+        return pathResult;
+    }
+
+    private void notifyImageMedia(String path) {
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri uri = Uri.fromFile(new File(path));
+        intent.setData(uri);
+        sendBroadcast(intent);
     }
 
     @Override
