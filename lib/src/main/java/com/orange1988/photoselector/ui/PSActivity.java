@@ -16,8 +16,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.orange1988.photoselector.R;
-import com.orange1988.photoselector.adapter.FolderAdapter;
-import com.orange1988.photoselector.adapter.PhotoAdapter;
+import com.orange1988.photoselector.adapter.PSFolderAdapter;
+import com.orange1988.photoselector.adapter.PSPhotoAdapter;
 import com.orange1988.photoselector.base.PSBaseActivity;
 import com.orange1988.photoselector.core.FolderDomain;
 import com.orange1988.photoselector.core.FolderLoader;
@@ -41,10 +41,10 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
     public static final int REQ_CODE_ALL = 2;
 
     private PhotoLoader photoLoader;
-    private PhotoAdapter photoAdapter;
+    private PSPhotoAdapter photoAdapter;
 
     private FolderLoader folderLoader;
-    private FolderAdapter folderAdapter;
+    private PSFolderAdapter folderAdapter;
 
     private int maxSelectedSize;
     private String folderName;
@@ -77,10 +77,10 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
         previewBtn = (Button) findViewById(R.id.preview_btn);
         previewBtn.setOnClickListener(this);
         photosGridView = (GridView) findViewById(R.id.photos_gv);
-        photoAdapter = new PhotoAdapter(this, this);
+        photoAdapter = new PSPhotoAdapter(this, this);
         photosGridView.setAdapter(photoAdapter);
         folderListView = (ListView) findViewById(R.id.folder_lv);
-        folderAdapter = new FolderAdapter(this, new OnFolderItemClickListener());
+        folderAdapter = new PSFolderAdapter(this, new OnFolderItemClickListener());
         folderListView.setAdapter(folderAdapter);
         folderListViewContainer = findViewById(R.id.folder_lv_container);
     }

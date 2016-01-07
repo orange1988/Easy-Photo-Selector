@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class PhotoAdapter extends PSBaseListAdapter<PhotoEntity> {
+public class PSPhotoAdapter extends PSBaseListAdapter<PhotoEntity> {
 
     private PhotoItemView.IPhotoItem iPhotoItem;
     private int itemWidth;
@@ -25,7 +25,7 @@ public class PhotoAdapter extends PSBaseListAdapter<PhotoEntity> {
 
     private static final int NUM_COLUMNS = 3;
 
-    public PhotoAdapter(Context context, PhotoItemView.IPhotoItem iPhotoItem) {
+    public PSPhotoAdapter(Context context, PhotoItemView.IPhotoItem iPhotoItem) {
         super(context);
         this.iPhotoItem = iPhotoItem;
         this.initItemLayoutParams();

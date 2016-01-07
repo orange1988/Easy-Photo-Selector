@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.orange1988.photoselector.R;
-import com.orange1988.photoselector.adapter.PreviewPagerAdapter;
+import com.orange1988.photoselector.adapter.PSPreviewPagerAdapter;
 import com.orange1988.photoselector.base.PSBaseActivity;
 import com.orange1988.photoselector.core.PhotoDomain;
 import com.orange1988.photoselector.core.PhotoLoader;
@@ -32,7 +32,7 @@ public class PhotoPreviewActivity extends PSBaseActivity implements View.OnClick
 
     private PhotoLoader photoLoader;
     private ViewPager viewPager;
-    private PreviewPagerAdapter adapter;
+    private PSPreviewPagerAdapter adapter;
     private View bottomBar;
     private View selectContainer;
     private ImageView selectCb;
@@ -78,7 +78,7 @@ public class PhotoPreviewActivity extends PSBaseActivity implements View.OnClick
         selectContainer.setOnClickListener(this);
         selectCb = (ImageView) findViewById(R.id.select_cb);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        adapter = new PreviewPagerAdapter(this, this);
+        adapter = new PSPreviewPagerAdapter(this, this);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);

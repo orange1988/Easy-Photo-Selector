@@ -11,14 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
-import com.orange1988.photoselector.adapter.PhotoAdapter;
+import com.orange1988.photoselector.adapter.PSPhotoAdapter;
 import com.orange1988.photoselector.core.PSManager;
 import com.orange1988.photoselector.ui.PSActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private GridView gridView;
-    private PhotoAdapter adapter;
+    private PSPhotoAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         gridView = (GridView) findViewById(R.id.gridView);
-        adapter = new PhotoAdapter(this, null);
+        adapter = new PSPhotoAdapter(this, null);
         gridView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

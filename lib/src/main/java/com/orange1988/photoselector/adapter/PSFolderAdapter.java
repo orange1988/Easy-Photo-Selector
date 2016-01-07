@@ -11,11 +11,11 @@ import com.orange1988.photoselector.view.FolderItemView;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class FolderAdapter extends PSBaseListAdapter<FolderEntity> {
+public class PSFolderAdapter extends PSBaseListAdapter<FolderEntity> {
 
     private FolderItemView.IFolderItem iFolderItem;
 
-    public FolderAdapter(Context context, FolderItemView.IFolderItem iFolderItem) {
+    public PSFolderAdapter(Context context, FolderItemView.IFolderItem iFolderItem) {
         super(context);
         this.iFolderItem = iFolderItem;
     }

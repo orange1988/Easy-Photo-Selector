@@ -14,14 +14,14 @@ import java.util.List;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class PreviewPagerAdapter extends PagerAdapter {
+public class PSPreviewPagerAdapter extends PagerAdapter {
 
     private List<PhotoEntity> photos;
     private Context mContext;
     private SparseArray<PreviewItemVIew> mViews;
     private PreviewItemVIew.IPreviewItem iPreviewItem;
 
-    public PreviewPagerAdapter(Context context, PreviewItemVIew.IPreviewItem iPreviewItem) {
+    public PSPreviewPagerAdapter(Context context, PreviewItemVIew.IPreviewItem iPreviewItem) {
         this.mContext = context;
         this.iPreviewItem = iPreviewItem;
         this.mViews = new SparseArray<>();
