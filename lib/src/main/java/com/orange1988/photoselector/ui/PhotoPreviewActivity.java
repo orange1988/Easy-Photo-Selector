@@ -11,10 +11,10 @@ import android.widget.Toast;
 
 import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.adapter.PreviewPagerAdapter;
-import com.orange1988.photoselector.base.BaseActivity;
+import com.orange1988.photoselector.base.PSBaseActivity;
 import com.orange1988.photoselector.core.PhotoDomain;
 import com.orange1988.photoselector.core.PhotoLoader;
-import com.orange1988.photoselector.core.PhotoSelectedManager;
+import com.orange1988.photoselector.core.PSManager;
 import com.orange1988.photoselector.entity.PhotoEntity;
 import com.orange1988.photoselector.view.PreviewItemVIew;
 
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  *
  */
-public class PhotoPreviewActivity extends BaseActivity implements View.OnClickListener, PreviewItemVIew.IPreviewItem, ViewPager.OnPageChangeListener, LoaderManager.LoaderCallbacks<List<PhotoEntity>> {
+public class PhotoPreviewActivity extends PSBaseActivity implements View.OnClickListener, PreviewItemVIew.IPreviewItem, ViewPager.OnPageChangeListener, LoaderManager.LoaderCallbacks<List<PhotoEntity>> {
 
     public static final String KEY_IS_PREVIEW = "KEY_IS_PREVIEW";
     public static final String KEY_FOLDER_NAME = "KEY_FOLDER_NAME";
@@ -48,7 +48,7 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
         initViews();
         boolean isPreview = getIntent().getBooleanExtra(KEY_IS_PREVIEW, false);
         if (isPreview) {
-            List<PhotoEntity> list = PhotoSelectedManager.getInstance().copyPhotos();
+            List<PhotoEntity> list = PSManager.getInstance().copyPhotos();
             maxSelectedSize = currentSelectedSize = list.size();
             adapter.setItems(list);
             adapter.notifyDataSetChanged();
@@ -106,7 +106,7 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
         adapter.setItems(photos);
         adapter.notifyDataSetChanged();
         viewPager.setCurrentItem(position, false);
-        currentSelectedSize = PhotoSelectedManager.getInstance().getPhotos().size();
+        currentSelectedSize = PSManager.getInstance().getPhotos().size();
         updateToolBar(position, currentSelectedSize);
     }
 
@@ -169,16 +169,16 @@ public class PhotoPreviewActivity extends BaseActivity implements View.OnClickLi
         boolean isChecked = photo.isChecked;
         if (isChecked) {
             photo.isChecked = !isChecked;
-            PhotoSelectedManager.getInstance().remove(photo);
+            PSManager.getInstance().remove(photo);
         } else {
-            if (PhotoSelectedManager.getInstance().getPhotos().size() >= maxSelectedSize) {
+            if (PSManager.getInstance().getPhotos().size() >= maxSelectedSize) {
                 Toast.makeText(this, String.format(getResources().getString(R.string.beyond_max_size), maxSelectedSize), Toast.LENGTH_SHORT).show();
                 return;
             }
             photo.isChecked = !isChecked;
-            PhotoSelectedManager.getInstance().addPhoto(photo);
+            PSManager.getInstance().addPhoto(photo);
         }
-        currentSelectedSize = PhotoSelectedManager.getInstance().getPhotos().size();
+        currentSelectedSize = PSManager.getInstance().getPhotos().size();
         updateToolBar(currentPosition, currentSelectedSize);
         updateBottomBar(photo.isChecked);
     }

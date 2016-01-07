@@ -18,12 +18,12 @@ import android.widget.Toast;
 import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.adapter.FolderAdapter;
 import com.orange1988.photoselector.adapter.PhotoAdapter;
-import com.orange1988.photoselector.base.BaseActivity;
+import com.orange1988.photoselector.base.PSBaseActivity;
 import com.orange1988.photoselector.core.FolderDomain;
 import com.orange1988.photoselector.core.FolderLoader;
 import com.orange1988.photoselector.core.PhotoDomain;
 import com.orange1988.photoselector.core.PhotoLoader;
-import com.orange1988.photoselector.core.PhotoSelectedManager;
+import com.orange1988.photoselector.core.PSManager;
 import com.orange1988.photoselector.entity.FolderEntity;
 import com.orange1988.photoselector.entity.PhotoEntity;
 import com.orange1988.photoselector.view.FolderItemView;
@@ -32,7 +32,7 @@ import com.orange1988.photoselector.view.PhotoItemView;
 import java.io.File;
 import java.util.List;
 
-public class PhotoSelectorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoEntity>>, PhotoItemView.IPhotoItem, View.OnClickListener {
+public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoEntity>>, PhotoItemView.IPhotoItem, View.OnClickListener {
 
     public static final String KEY_MAX_SELECTED_SIZE = "KEY_MAX_SELECTED_SIZE";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 200;
@@ -103,8 +103,8 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
                         photo.path = path;
                         photo.isChecked = true;
                         notifyImageMedia(path);
-                        PhotoSelectedManager.getInstance().clear();
-                        PhotoSelectedManager.getInstance().addPhoto(photo);
+                        PSManager.getInstance().clear();
+                        PSManager.getInstance().addPhoto(photo);
                         onBackBtnPressed();
                         getSupportLoaderManager().restartLoader(0, null, this);
                     }
@@ -155,9 +155,9 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     @Override
     public void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view) {
         if (photoEntity.isChecked) {
-            PhotoSelectedManager.getInstance().addPhoto(photoEntity);
+            PSManager.getInstance().addPhoto(photoEntity);
         } else {
-            PhotoSelectedManager.getInstance().remove(photoEntity);
+            PSManager.getInstance().remove(photoEntity);
         }
         updateToolBarAndBottomBar();
     }
@@ -237,7 +237,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
     private void updatePhotosSelected() {
         for (PhotoEntity photo : photoLoader.getPhotos()) {
-            if (PhotoSelectedManager.getInstance().contain(photo)) {
+            if (PSManager.getInstance().contain(photo)) {
                 photo.isChecked = true;
             } else {
                 photo.isChecked = false;
@@ -248,7 +248,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
     }
 
     private void updateToolBarAndBottomBar() {
-        int currentSelectedSize = PhotoSelectedManager.getInstance().getPhotos().size();
+        int currentSelectedSize = PSManager.getInstance().getPhotos().size();
         if (currentSelectedSize == 0) {
             completeBtn.setEnabled(false);
             completeBtn.setText(R.string.complete);
@@ -271,7 +271,7 @@ public class PhotoSelectorActivity extends BaseActivity implements LoaderManager
 
         @Override
         public Loader<List<FolderEntity>> onCreateLoader(int id, Bundle args) {
-            folderLoader = new FolderLoader(PhotoSelectorActivity.this, new FolderDomain(PhotoSelectorActivity.this));
+            folderLoader = new FolderLoader(PSActivity.this, new FolderDomain(PSActivity.this));
             return folderLoader;
         }
 

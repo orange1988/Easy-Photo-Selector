@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.orange1988.photoselector.R;
-import com.orange1988.photoselector.base.BaseLoader;
+import com.orange1988.photoselector.base.PSLoader;
 import com.orange1988.photoselector.base.IDomain;
 import com.orange1988.photoselector.entity.PhotoEntity;
 
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Mr. Orange on 15/11/27.
  */
-public class PhotoLoader extends BaseLoader<PhotoEntity> {
+public class PhotoLoader extends PSLoader<PhotoEntity> {
 
     private String folderName;
     private List<PhotoEntity> mPhotos;

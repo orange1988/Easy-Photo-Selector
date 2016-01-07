@@ -36,7 +36,7 @@ public class PhotoDomain implements IDomain<PhotoEntity> {
                 photoEntity = new PhotoEntity();
                 photoEntity.path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA));
                 photos.add(photoEntity);
-                if (PhotoSelectedManager.getInstance().contain(photoEntity)) {
+                if (PSManager.getInstance().contain(photoEntity)) {
                     photoEntity.isChecked = true;
                 }
             }
@@ -59,7 +59,7 @@ public class PhotoDomain implements IDomain<PhotoEntity> {
                 photoEntity = new PhotoEntity();
                 photoEntity.path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA));
                 photos.add(photoEntity);
-                if (PhotoSelectedManager.getInstance().contain(photoEntity)) {
+                if (PSManager.getInstance().contain(photoEntity)) {
                     photoEntity.isChecked = true;
                 }
             }

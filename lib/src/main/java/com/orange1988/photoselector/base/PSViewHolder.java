@@ -7,9 +7,9 @@ import butterknife.ButterKnife;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public abstract class BaseViewHolder {
+public abstract class PSViewHolder {
 
-    public BaseViewHolder(View view) {
+    public PSViewHolder(View view) {
         ButterKnife.bind(this, view);
     }
 }

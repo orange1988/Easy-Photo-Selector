@@ -3,15 +3,15 @@ package com.orange1988.photoselector.adapter;
 import android.content.Context;
 import android.view.View;
 
-import com.orange1988.photoselector.base.BaseListAdapter;
-import com.orange1988.photoselector.base.BaseViewHolder;
+import com.orange1988.photoselector.base.PSBaseListAdapter;
+import com.orange1988.photoselector.base.PSViewHolder;
 import com.orange1988.photoselector.entity.FolderEntity;
 import com.orange1988.photoselector.view.FolderItemView;
 
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class FolderAdapter extends BaseListAdapter<FolderEntity> {
+public class FolderAdapter extends PSBaseListAdapter<FolderEntity> {
 
     private FolderItemView.IFolderItem iFolderItem;
 
@@ -21,7 +21,7 @@ public class FolderAdapter extends BaseListAdapter<FolderEntity> {
     }
 
     @Override
-    public void render(int position, BaseViewHolder baseHolder, FolderEntity item) {
+    public void render(int position, PSViewHolder baseHolder, FolderEntity item) {
         if (baseHolder instanceof ViewHolder) {
             ViewHolder holder = (ViewHolder) baseHolder;
             holder.folderItemView.setData(item, position, iFolderItem);
@@ -29,7 +29,7 @@ public class FolderAdapter extends BaseListAdapter<FolderEntity> {
     }
 
     @Override
-    public BaseViewHolder getViewHolder(int position, View convertView) {
+    public PSViewHolder getViewHolder(int position, View convertView) {
         return new ViewHolder( convertView);
     }
 
@@ -48,7 +48,7 @@ public class FolderAdapter extends BaseListAdapter<FolderEntity> {
         }
     }
 
-    private static class ViewHolder extends BaseViewHolder {
+    private static class ViewHolder extends PSViewHolder {
 
         public FolderItemView folderItemView;
 

@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.orange1988.photoselector.ui.PhotoSelectorActivity"
+        <activity android:name="com.orange1988.photoselector.ui.PSActivity"
             android:label="@string/title_photo_selector_activity"
             android:theme="@style/AppTheme.NoActionBar"/>
 

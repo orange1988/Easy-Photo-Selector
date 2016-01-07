@@ -8,12 +8,12 @@ import java.util.List;
 /**
  * Created by Orange on 15/11/29.
  */
-public abstract class BaseLoader<T> extends AsyncTaskLoader<List<T>> {
+public abstract class PSLoader<T> extends AsyncTaskLoader<List<T>> {
 
     protected IDomain domain;
     protected List<T> mItems;
 
-    public BaseLoader(Context context, IDomain domain) {
+    public PSLoader(Context context, IDomain domain) {
         super(context);
         this.domain = domain;
     }

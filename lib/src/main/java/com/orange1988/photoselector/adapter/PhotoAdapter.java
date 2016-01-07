@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.AbsListView;
 
 import com.orange1988.photoselector.R;
-import com.orange1988.photoselector.base.BaseListAdapter;
-import com.orange1988.photoselector.base.BaseViewHolder;
+import com.orange1988.photoselector.base.PSBaseListAdapter;
+import com.orange1988.photoselector.base.PSViewHolder;
 import com.orange1988.photoselector.entity.PhotoEntity;
 import com.orange1988.photoselector.util.SystemUtils;
 import com.orange1988.photoselector.view.PhotoItemView;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class PhotoAdapter extends BaseListAdapter<PhotoEntity> {
+public class PhotoAdapter extends PSBaseListAdapter<PhotoEntity> {
 
     private PhotoItemView.IPhotoItem iPhotoItem;
     private int itemWidth;
@@ -47,7 +47,7 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity> {
     }
 
     @Override
-    public void render(int position, BaseViewHolder baseHolder, PhotoEntity item) {
+    public void render(int position, PSViewHolder baseHolder, PhotoEntity item) {
         if (baseHolder instanceof ViewHolder) {
             ViewHolder holder = (ViewHolder) baseHolder;
             holder.photoItemView.setData(item, position, iPhotoItem);
@@ -55,7 +55,7 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity> {
     }
 
     @Override
-    public BaseViewHolder getViewHolder(int position, View convertView) {
+    public PSViewHolder getViewHolder(int position, View convertView) {
         return new ViewHolder(convertView);
     }
 
@@ -66,7 +66,7 @@ public class PhotoAdapter extends BaseListAdapter<PhotoEntity> {
         return view;
     }
 
-    private static class ViewHolder extends BaseViewHolder {
+    private static class ViewHolder extends PSViewHolder {
 
         public PhotoItemView photoItemView;
 

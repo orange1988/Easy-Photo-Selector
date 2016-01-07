@@ -8,20 +8,20 @@ import java.util.List;
 /**
  * Created by Mr. Orange on 15/11/30.
  */
-public class PhotoSelectedManager {
+public class PSManager {
 
-    private static PhotoSelectedManager instance;
+    private static PSManager instance;
 
     private List<PhotoEntity> photos;
 
-    public static PhotoSelectedManager getInstance() {
+    public static PSManager getInstance() {
         if (instance == null) {
-            instance = new PhotoSelectedManager();
+            instance = new PSManager();
         }
         return instance;
     }
 
-    private PhotoSelectedManager() {
+    private PSManager() {
         photos = new ArrayList<>();
     }
 

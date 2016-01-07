@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.orange1988.photoselector.R;
-import com.orange1988.photoselector.core.PhotoSelectedManager;
+import com.orange1988.photoselector.core.PSManager;
 import com.orange1988.photoselector.entity.PhotoEntity;
 import com.squareup.picasso.Picasso;
 
@@ -48,7 +48,7 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
                 iPhotoItem.onItemClickListener(photoEntity, position);
             }
         } else if (v == checkView) {
-            if (PhotoSelectedManager.getInstance().getPhotos().size() >= iPhotoItem.getSelectedLimit() && !photoEntity.isChecked) {
+            if (PSManager.getInstance().getPhotos().size() >= iPhotoItem.getSelectedLimit() && !photoEntity.isChecked) {
                 iPhotoItem.beyondSelectedLimit();
                 return;
             } else {

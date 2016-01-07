@@ -10,14 +10,14 @@ import java.util.List;
 /**
  * Created by Mr. Orange on 15/11/25.
  */
-public abstract class BaseListAdapter<T> extends BaseAdapter {
+public abstract class PSBaseListAdapter<T> extends BaseAdapter {
 
     public final String TAG = getClass().getSimpleName();
 
     protected Context mContext;
     protected List<T> items;
 
-    public BaseListAdapter(Context context) {
+    public PSBaseListAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -54,14 +54,14 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final BaseViewHolder holder;
+        final PSViewHolder holder;
 
         if (convertView == null) {
             convertView = getConvertView(position);
             holder = getViewHolder(position, convertView);
             convertView.setTag(holder);
         } else {
-            holder = (BaseViewHolder) convertView.getTag();
+            holder = (PSViewHolder) convertView.getTag();
         }
 
         T item = items.get(position);
@@ -69,9 +69,9 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         return convertView;
     }
 
-    public abstract void render(int position, BaseViewHolder baseHolder, T item);
+    public abstract void render(int position, PSViewHolder baseHolder, T item);
 
-    public abstract BaseViewHolder getViewHolder(int position, View convertView);
+    public abstract PSViewHolder getViewHolder(int position, View convertView);
 
     public abstract View getConvertView(int position);
 }

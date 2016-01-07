@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.widget.GridView;
 
 import com.orange1988.photoselector.adapter.PhotoAdapter;
-import com.orange1988.photoselector.core.PhotoSelectedManager;
-import com.orange1988.photoselector.ui.PhotoSelectorActivity;
+import com.orange1988.photoselector.core.PSManager;
+import com.orange1988.photoselector.ui.PSActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(MainActivity.this, PhotoSelectorActivity.class), 0);
+                startActivityForResult(new Intent(MainActivity.this, PSActivity.class), 0);
             }
         });
     }
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        adapter.setItems(PhotoSelectedManager.getInstance().getPhotos());
+        adapter.setItems(PSManager.getInstance().getPhotos());
         adapter.notifyDataSetChanged();
     }
 

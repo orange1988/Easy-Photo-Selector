@@ -12,7 +12,7 @@ import com.orange1988.photoselector.R;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class PSBaseActivity extends AppCompatActivity {
 
     protected Toolbar toolbar;
     protected Button completeBtn;
