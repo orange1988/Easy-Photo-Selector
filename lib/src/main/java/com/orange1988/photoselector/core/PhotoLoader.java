@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.base.PSLoader;
-import com.orange1988.photoselector.base.IDomain;
+import com.orange1988.photoselector.base.IPSDomain;
 import com.orange1988.photoselector.entity.PhotoEntity;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class PhotoLoader extends PSLoader<PhotoEntity> {
     private String folderName;
     private List<PhotoEntity> mPhotos;
 
-    public PhotoLoader(Context context, IDomain domain) {
+    public PhotoLoader(Context context, IPSDomain domain) {
         super(context, domain);
     }
 

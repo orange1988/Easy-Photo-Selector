@@ -26,7 +26,7 @@
             android:label="@string/title_photo_selector_activity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name="com.orange1988.photoselector.ui.PhotoPreviewActivity"
+        <activity android:name="com.orange1988.photoselector.ui.PSPreviewActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

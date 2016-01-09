@@ -10,10 +10,10 @@ import java.util.List;
  */
 public abstract class PSLoader<T> extends AsyncTaskLoader<List<T>> {
 
-    protected IDomain domain;
+    protected IPSDomain domain;
     protected List<T> mItems;
 
-    public PSLoader(Context context, IDomain domain) {
+    public PSLoader(Context context, IPSDomain domain) {
         super(context);
         this.domain = domain;
     }

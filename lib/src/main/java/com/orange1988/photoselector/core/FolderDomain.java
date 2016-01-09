@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.provider.MediaStore;
 
 import com.orange1988.photoselector.R;
-import com.orange1988.photoselector.base.IDomain;
+import com.orange1988.photoselector.base.IPSDomain;
 import com.orange1988.photoselector.entity.FolderEntity;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Created by Orange on 15/11/29.
  */
-public class FolderDomain implements IDomain<FolderEntity> {
+public class FolderDomain implements IPSDomain<FolderEntity> {
 
     protected ContentResolver contentResolver;
 

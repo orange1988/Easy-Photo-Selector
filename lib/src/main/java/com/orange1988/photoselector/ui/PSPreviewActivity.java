@@ -23,7 +23,7 @@ import java.util.List;
 /**
  *
  */
-public class PhotoPreviewActivity extends PSBaseActivity implements View.OnClickListener, PreviewItemVIew.IPreviewItem, ViewPager.OnPageChangeListener, LoaderManager.LoaderCallbacks<List<PhotoEntity>> {
+public class PSPreviewActivity extends PSBaseActivity implements View.OnClickListener, PreviewItemVIew.IPreviewItem, ViewPager.OnPageChangeListener, LoaderManager.LoaderCallbacks<List<PhotoEntity>> {
 
     public static final String KEY_IS_PREVIEW = "KEY_IS_PREVIEW";
     public static final String KEY_FOLDER_NAME = "KEY_FOLDER_NAME";

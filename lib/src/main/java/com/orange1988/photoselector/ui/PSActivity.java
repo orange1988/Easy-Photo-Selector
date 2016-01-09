@@ -164,9 +164,9 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
 
     @Override
     public void onItemClickListener(PhotoEntity photoEntity, int position) {
-        Intent intent = new Intent(this, PhotoPreviewActivity.class);
-        intent.putExtra(PhotoPreviewActivity.KEY_FOLDER_NAME, folderName);
-        intent.putExtra(PhotoPreviewActivity.KEY_PHOTO_POSITION, position);
+        Intent intent = new Intent(this, PSPreviewActivity.class);
+        intent.putExtra(PSPreviewActivity.KEY_FOLDER_NAME, folderName);
+        intent.putExtra(PSPreviewActivity.KEY_PHOTO_POSITION, position);
         startActivityForResult(intent, REQ_CODE_ALL);
     }
 
@@ -221,8 +221,8 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
     }
 
     private void preview() {
-        Intent intent = new Intent(this, PhotoPreviewActivity.class);
-        intent.putExtra(PhotoPreviewActivity.KEY_IS_PREVIEW, true);
+        Intent intent = new Intent(this, PSPreviewActivity.class);
+        intent.putExtra(PSPreviewActivity.KEY_IS_PREVIEW, true);
         startActivityForResult(intent, REQ_CODE_PREVIEW);
     }
 

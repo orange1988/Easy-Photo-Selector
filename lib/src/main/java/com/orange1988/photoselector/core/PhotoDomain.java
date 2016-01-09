@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
-import com.orange1988.photoselector.base.IDomain;
+import com.orange1988.photoselector.base.IPSDomain;
 import com.orange1988.photoselector.entity.PhotoEntity;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class PhotoDomain implements IDomain<PhotoEntity> {
+public class PhotoDomain implements IPSDomain<PhotoEntity> {
 
     private ContentResolver contentResolver;
 

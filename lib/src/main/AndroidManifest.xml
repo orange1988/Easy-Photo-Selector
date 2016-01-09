@@ -7,7 +7,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <activity android:name=".ui.PSActivity" />
-        <activity android:name=".ui.PhotoPreviewActivity"></activity>
+        <activity android:name=".ui.PSPreviewActivity"></activity>
     </application>
 
 </manifest>

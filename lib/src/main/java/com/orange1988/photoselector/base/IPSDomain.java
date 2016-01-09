@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Ervin on 15/11/29.
  */
-public interface  IDomain<T> {
+public interface IPSDomain<T> {
 
 
 
