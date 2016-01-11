@@ -24,15 +24,15 @@ import com.orange1988.photoselector.core.FolderLoader;
 import com.orange1988.photoselector.core.PhotoDomain;
 import com.orange1988.photoselector.core.PhotoLoader;
 import com.orange1988.photoselector.core.PSManager;
-import com.orange1988.photoselector.entity.FolderEntity;
-import com.orange1988.photoselector.entity.PhotoEntity;
+import com.orange1988.photoselector.entity.PSFolderEntity;
+import com.orange1988.photoselector.entity.PSPhotoEntity;
 import com.orange1988.photoselector.view.FolderItemView;
 import com.orange1988.photoselector.view.PhotoItemView;
 
 import java.io.File;
 import java.util.List;
 
-public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCallbacks<List<PhotoEntity>>, PhotoItemView.IPhotoItem, View.OnClickListener {
+public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCallbacks<List<PSPhotoEntity>>, PhotoItemView.IPhotoItem, View.OnClickListener {
 
     public static final String KEY_MAX_SELECTED_SIZE = "KEY_MAX_SELECTED_SIZE";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 200;
@@ -99,7 +99,7 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
                 if (resultCode == RESULT_OK) {
                     String path = getPhotoTakenFilePath();
                     if (!TextUtils.isEmpty(path)) {
-                        PhotoEntity photo = new PhotoEntity();
+                        PSPhotoEntity photo = new PSPhotoEntity();
                         photo.path = path;
                         photo.isChecked = true;
                         notifyImageMedia(path);
@@ -124,13 +124,13 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
     }
 
     @Override
-    public Loader<List<PhotoEntity>> onCreateLoader(int id, Bundle args) {
+    public Loader<List<PSPhotoEntity>> onCreateLoader(int id, Bundle args) {
         photoLoader = new PhotoLoader(this, new PhotoDomain(this));
         return photoLoader;
     }
 
     @Override
-    public void onLoadFinished(Loader<List<PhotoEntity>> loader, List<PhotoEntity> data) {
+    public void onLoadFinished(Loader<List<PSPhotoEntity>> loader, List<PSPhotoEntity> data) {
         photoAdapter.setItems(data, isInAllPhotosFolder());
         photoAdapter.notifyDataSetChanged();
         photosGridView.smoothScrollToPosition(0);
@@ -138,7 +138,7 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onLoaderReset(Loader<List<PhotoEntity>> loader) {
+    public void onLoaderReset(Loader<List<PSPhotoEntity>> loader) {
         photoAdapter.setItems(null);
     }
 
@@ -153,7 +153,7 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view) {
+    public void onCheckedChanged(PSPhotoEntity photoEntity, PhotoItemView view) {
         if (photoEntity.isChecked) {
             PSManager.getInstance().addPhoto(photoEntity);
         } else {
@@ -163,7 +163,7 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onItemClickListener(PhotoEntity photoEntity, int position) {
+    public void onItemClickListener(PSPhotoEntity photoEntity, int position) {
         Intent intent = new Intent(this, PSPreviewActivity.class);
         intent.putExtra(PSPreviewActivity.KEY_FOLDER_NAME, folderName);
         intent.putExtra(PSPreviewActivity.KEY_PHOTO_POSITION, position);
@@ -236,7 +236,7 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
     }
 
     private void updatePhotosSelected() {
-        for (PhotoEntity photo : photoLoader.getPhotos()) {
+        for (PSPhotoEntity photo : photoLoader.getPhotos()) {
             if (PSManager.getInstance().contain(photo)) {
                 photo.isChecked = true;
             } else {
@@ -267,22 +267,22 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
         return true;
     }
 
-    private class FolderLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<FolderEntity>> {
+    private class FolderLoaderCallbacks implements LoaderManager.LoaderCallbacks<List<PSFolderEntity>> {
 
         @Override
-        public Loader<List<FolderEntity>> onCreateLoader(int id, Bundle args) {
+        public Loader<List<PSFolderEntity>> onCreateLoader(int id, Bundle args) {
             folderLoader = new FolderLoader(PSActivity.this, new FolderDomain(PSActivity.this));
             return folderLoader;
         }
 
         @Override
-        public void onLoadFinished(Loader<List<FolderEntity>> loader, List<FolderEntity> folders) {
+        public void onLoadFinished(Loader<List<PSFolderEntity>> loader, List<PSFolderEntity> folders) {
             folderAdapter.setItems(folders);
             folderAdapter.notifyDataSetChanged();
         }
 
         @Override
-        public void onLoaderReset(Loader<List<FolderEntity>> loader) {
+        public void onLoaderReset(Loader<List<PSFolderEntity>> loader) {
 
         }
 
@@ -291,7 +291,7 @@ public class PSActivity extends PSBaseActivity implements LoaderManager.LoaderCa
     private class OnFolderItemClickListener implements FolderItemView.IFolderItem {
 
         @Override
-        public void onItemClickListener(FolderEntity folderEntity, int position) {
+        public void onItemClickListener(PSFolderEntity folderEntity, int position) {
             folderAdapter.update(folderEntity);
             folderAdapter.notifyDataSetChanged();
             folderSelectorBtn.setText(folderEntity.name);

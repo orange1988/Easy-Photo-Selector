@@ -3,7 +3,7 @@ package com.orange1988.photoselector.entity;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class FolderEntity {
+public class PSFolderEntity {
 
     public String name;
 
@@ -13,16 +13,16 @@ public class FolderEntity {
 
     public boolean isChecked;
 
-    public FolderEntity(String name) {
+    public PSFolderEntity(String name) {
         this.name = name;
     }
 
-    public FolderEntity(String name, int size) {
+    public PSFolderEntity(String name, int size) {
         this(name);
         this.size = size;
     }
 
-    public FolderEntity(String name, int size, String path, boolean isChecked) {
+    public PSFolderEntity(String name, int size, String path, boolean isChecked) {
         this(name, size);
         this.path = path;
         this.isChecked = isChecked;
@@ -40,10 +40,10 @@ public class FolderEntity {
         if (o == null) {
             return false;
         }
-        if (!(o instanceof FolderEntity)) {
+        if (!(o instanceof PSFolderEntity)) {
             return false;
         }
-        FolderEntity entity = (FolderEntity) o;
+        PSFolderEntity entity = (PSFolderEntity) o;
         if (name != null && name.equals(entity.name)) {
             return true;
         } else {

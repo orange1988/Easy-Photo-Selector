@@ -15,7 +15,7 @@ import com.orange1988.photoselector.base.PSBaseActivity;
 import com.orange1988.photoselector.core.PhotoDomain;
 import com.orange1988.photoselector.core.PhotoLoader;
 import com.orange1988.photoselector.core.PSManager;
-import com.orange1988.photoselector.entity.PhotoEntity;
+import com.orange1988.photoselector.entity.PSPhotoEntity;
 import com.orange1988.photoselector.view.PreviewItemVIew;
 
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  *
  */
-public class PSPreviewActivity extends PSBaseActivity implements View.OnClickListener, PreviewItemVIew.IPreviewItem, ViewPager.OnPageChangeListener, LoaderManager.LoaderCallbacks<List<PhotoEntity>> {
+public class PSPreviewActivity extends PSBaseActivity implements View.OnClickListener, PreviewItemVIew.IPreviewItem, ViewPager.OnPageChangeListener, LoaderManager.LoaderCallbacks<List<PSPhotoEntity>> {
 
     public static final String KEY_IS_PREVIEW = "KEY_IS_PREVIEW";
     public static final String KEY_FOLDER_NAME = "KEY_FOLDER_NAME";
@@ -40,7 +40,7 @@ public class PSPreviewActivity extends PSBaseActivity implements View.OnClickLis
     private int maxSelectedSize;
     private int currentSelectedSize;
     private int currentPosition;
-    private PhotoEntity photo;
+    private PSPhotoEntity photo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class PSPreviewActivity extends PSBaseActivity implements View.OnClickLis
         initViews();
         boolean isPreview = getIntent().getBooleanExtra(KEY_IS_PREVIEW, false);
         if (isPreview) {
-            List<PhotoEntity> list = PSManager.getInstance().copyPhotos();
+            List<PSPhotoEntity> list = PSManager.getInstance().copyPhotos();
             maxSelectedSize = currentSelectedSize = list.size();
             adapter.setItems(list);
             adapter.notifyDataSetChanged();
@@ -92,12 +92,12 @@ public class PSPreviewActivity extends PSBaseActivity implements View.OnClickLis
     }
 
     @Override
-    public Loader<List<PhotoEntity>> onCreateLoader(int id, Bundle args) {
+    public Loader<List<PSPhotoEntity>> onCreateLoader(int id, Bundle args) {
         return photoLoader;
     }
 
     @Override
-    public void onLoadFinished(Loader<List<PhotoEntity>> loader, List<PhotoEntity> photos) {
+    public void onLoadFinished(Loader<List<PSPhotoEntity>> loader, List<PSPhotoEntity> photos) {
         int position = getIntent().getIntExtra(KEY_PHOTO_POSITION, 0);
         String folderName = getIntent().getStringExtra(KEY_FOLDER_NAME);
         if (TextUtils.isEmpty(folderName) || folderName.equals(getResources().getString(R.string.all_photos))) {
@@ -111,7 +111,7 @@ public class PSPreviewActivity extends PSBaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onLoaderReset(Loader<List<PhotoEntity>> loader) {
+    public void onLoaderReset(Loader<List<PSPhotoEntity>> loader) {
 
     }
 
@@ -134,7 +134,7 @@ public class PSPreviewActivity extends PSBaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onPhotoClickListener(PhotoEntity photo, int position) {
+    public void onPhotoClickListener(PSPhotoEntity photo, int position) {
         toggleBar();
     }
 

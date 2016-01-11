@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.orange1988.photoselector.R;
-import com.orange1988.photoselector.entity.FolderEntity;
+import com.orange1988.photoselector.entity.PSFolderEntity;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -22,7 +22,7 @@ public class FolderItemView extends LinearLayout implements View.OnClickListener
     private ImageView checkView;
 
     private IFolderItem iFolderItem;
-    private FolderEntity folderEntity;
+    private PSFolderEntity folderEntity;
     private int position;
 
     public FolderItemView(Context context) {
@@ -45,7 +45,7 @@ public class FolderItemView extends LinearLayout implements View.OnClickListener
         setBtnChecked(checkView, selected);
     }
 
-    public void setData(FolderEntity folderEntity, int position, final IFolderItem iFolderItem) {
+    public void setData(PSFolderEntity folderEntity, int position, final IFolderItem iFolderItem) {
         this.folderEntity = folderEntity;
         this.position = position;
         this.iFolderItem = iFolderItem;
@@ -67,7 +67,7 @@ public class FolderItemView extends LinearLayout implements View.OnClickListener
     }
 
     public interface IFolderItem {
-        void onItemClickListener(FolderEntity folderEntity, int position);
+        void onItemClickListener(PSFolderEntity folderEntity, int position);
     }
 
     private void setBtnChecked(ImageView v, boolean isChecked) {

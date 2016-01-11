@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.base.PSLoader;
 import com.orange1988.photoselector.base.IPSDomain;
-import com.orange1988.photoselector.entity.PhotoEntity;
+import com.orange1988.photoselector.entity.PSPhotoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +14,10 @@ import java.util.List;
 /**
  * Created by Mr. Orange on 15/11/27.
  */
-public class PhotoLoader extends PSLoader<PhotoEntity> {
+public class PhotoLoader extends PSLoader<PSPhotoEntity> {
 
     private String folderName;
-    private List<PhotoEntity> mPhotos;
+    private List<PSPhotoEntity> mPhotos;
 
     public PhotoLoader(Context context, IPSDomain domain) {
         super(context, domain);
@@ -27,12 +27,12 @@ public class PhotoLoader extends PSLoader<PhotoEntity> {
         this.folderName = name;
     }
 
-    public List<PhotoEntity> getPhotos() {
+    public List<PSPhotoEntity> getPhotos() {
         return mPhotos;
     }
 
     @Override
-    public List<PhotoEntity> loadInBackground() {
+    public List<PSPhotoEntity> loadInBackground() {
         if (domain instanceof PhotoDomain) {
             PhotoDomain photoDomain = (PhotoDomain) domain;
             if (!TextUtils.isEmpty(folderName) && !folderName.equals(getContext().getResources().getString(R.string.all_photos))) {
@@ -46,7 +46,7 @@ public class PhotoLoader extends PSLoader<PhotoEntity> {
     }
 
     @Override
-    public void onCanceled(List<PhotoEntity> photos) {
+    public void onCanceled(List<PSPhotoEntity> photos) {
         super.onCanceled(photos);
         onReleaseResource(photos);
     }
@@ -77,14 +77,14 @@ public class PhotoLoader extends PSLoader<PhotoEntity> {
     }
 
     @Override
-    public void deliverResult(List<PhotoEntity> photos) {
+    public void deliverResult(List<PSPhotoEntity> photos) {
         if (isReset()) {
             if (photos != null) {
                 onReleaseResource(photos);
             }
         }
 
-        List<PhotoEntity> oldPhotos = photos;
+        List<PSPhotoEntity> oldPhotos = photos;
         mPhotos = photos;
 
         if (isStarted()) {
@@ -95,7 +95,7 @@ public class PhotoLoader extends PSLoader<PhotoEntity> {
         }
     }
 
-    protected void onReleaseResource(List<PhotoEntity> photos) {
+    protected void onReleaseResource(List<PSPhotoEntity> photos) {
 
     }
 

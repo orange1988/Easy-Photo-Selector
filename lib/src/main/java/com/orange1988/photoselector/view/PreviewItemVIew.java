@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.orange1988.photoselector.R;
-import com.orange1988.photoselector.entity.PhotoEntity;
+import com.orange1988.photoselector.entity.PSPhotoEntity;
 import com.squareup.picasso.Picasso;
 
 import uk.co.senab.photoview.PhotoView;
@@ -18,7 +18,7 @@ public class PreviewItemVIew extends LinearLayout implements PhotoViewAttacher.O
 
     private PhotoView photoView;
     private IPreviewItem iPreviewItem;
-    private PhotoEntity photo;
+    private PSPhotoEntity photo;
     private int position;
 
     public PreviewItemVIew(Context context) {
@@ -28,7 +28,7 @@ public class PreviewItemVIew extends LinearLayout implements PhotoViewAttacher.O
         photoView.setOnPhotoTapListener(this);
     }
 
-    public void setData(PhotoEntity photo, int position, IPreviewItem iPreviewItem) {
+    public void setData(PSPhotoEntity photo, int position, IPreviewItem iPreviewItem) {
         this.photo = photo;
         this.position = position;
         this.iPreviewItem = iPreviewItem;
@@ -48,7 +48,7 @@ public class PreviewItemVIew extends LinearLayout implements PhotoViewAttacher.O
 
     public interface IPreviewItem {
 
-        void onPhotoClickListener(PhotoEntity photo, int position);
+        void onPhotoClickListener(PSPhotoEntity photo, int position);
 
         int getMaxSelectedSize();
     }

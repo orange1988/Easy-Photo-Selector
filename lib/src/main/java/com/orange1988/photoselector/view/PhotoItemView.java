@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import com.orange1988.photoselector.R;
 import com.orange1988.photoselector.core.PSManager;
-import com.orange1988.photoselector.entity.PhotoEntity;
+import com.orange1988.photoselector.entity.PSPhotoEntity;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -21,7 +21,7 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
     private View maskView;
 
     private IPhotoItem iPhotoItem;
-    private PhotoEntity photoEntity;
+    private PSPhotoEntity photoEntity;
     private int position;
 
     public static final String FLAG_CAMERA = "FLAG_CAMERA_ORANGE_1988_@_2015_12_01";
@@ -69,7 +69,7 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
         setBtnChecked(checkView, selected);
     }
 
-    public void setData(PhotoEntity photoEntity, int position, final IPhotoItem iPhotoItem) {
+    public void setData(PSPhotoEntity photoEntity, int position, final IPhotoItem iPhotoItem) {
         this.photoEntity = photoEntity;
         this.position = position;
         this.iPhotoItem = iPhotoItem;
@@ -101,9 +101,9 @@ public class PhotoItemView extends LinearLayout implements View.OnClickListener 
 
         void beyondSelectedLimit();
 
-        void onCheckedChanged(PhotoEntity photoEntity, PhotoItemView view);
+        void onCheckedChanged(PSPhotoEntity photoEntity, PhotoItemView view);
 
-        void onItemClickListener(PhotoEntity photoEntity, int position);
+        void onItemClickListener(PSPhotoEntity photoEntity, int position);
 
         void onCameraItemClick();
 

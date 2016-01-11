@@ -3,7 +3,7 @@ package com.orange1988.photoselector.entity;
 /**
  * Created by Mr. Orange on 15/11/26.
  */
-public class PhotoEntity {
+public class PSPhotoEntity {
 
     public static final String FLAG_CAMERA_PATH = "orange1988_camera_path";
 
@@ -13,20 +13,20 @@ public class PhotoEntity {
 
     public boolean isChecked;
 
-    public PhotoEntity() {
+    public PSPhotoEntity() {
 
     }
 
-    public PhotoEntity(String name) {
+    public PSPhotoEntity(String name) {
         this.name = name;
     }
 
-    public PhotoEntity(String name, boolean isChecked) {
+    public PSPhotoEntity(String name, boolean isChecked) {
         this(name);
         this.isChecked = isChecked;
     }
 
-    public PhotoEntity(String name, String path, boolean isChecked) {
+    public PSPhotoEntity(String name, String path, boolean isChecked) {
         this(name, isChecked);
         this.path = path;
     }
@@ -39,10 +39,10 @@ public class PhotoEntity {
         if (o == null) {
             return false;
         }
-        if (!(o instanceof PhotoEntity)) {
+        if (!(o instanceof PSPhotoEntity)) {
             return false;
         }
-        PhotoEntity entity = (PhotoEntity) o;
+        PSPhotoEntity entity = (PSPhotoEntity) o;
         if (path != null && path.equals(entity.path)) {
             return true;
         } else {
@@ -50,8 +50,8 @@ public class PhotoEntity {
         }
     }
 
-    public PhotoEntity copy() {
-        return new PhotoEntity(name, path, isChecked);
+    public PSPhotoEntity copy() {
+        return new PSPhotoEntity(name, path, isChecked);
     }
 
 

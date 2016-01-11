@@ -6,7 +6,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.orange1988.photoselector.entity.PhotoEntity;
+import com.orange1988.photoselector.entity.PSPhotoEntity;
 import com.orange1988.photoselector.view.PreviewItemVIew;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class PSPreviewPagerAdapter extends PagerAdapter {
 
-    private List<PhotoEntity> photos;
+    private List<PSPhotoEntity> photos;
     private Context mContext;
     private SparseArray<PreviewItemVIew> mViews;
     private PreviewItemVIew.IPreviewItem iPreviewItem;
@@ -27,7 +27,7 @@ public class PSPreviewPagerAdapter extends PagerAdapter {
         this.mViews = new SparseArray<>();
     }
 
-    public void setItems(List<PhotoEntity> items) {
+    public void setItems(List<PSPhotoEntity> items) {
         this.photos = items;
     }
 
@@ -36,7 +36,7 @@ public class PSPreviewPagerAdapter extends PagerAdapter {
         return photos == null ? 0 : photos.size();
     }
 
-    public PhotoEntity getItem(int position) {
+    public PSPhotoEntity getItem(int position) {
         return photos.get(position);
     }
 

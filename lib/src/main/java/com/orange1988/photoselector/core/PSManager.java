@@ -1,6 +1,6 @@
 package com.orange1988.photoselector.core;
 
-import com.orange1988.photoselector.entity.PhotoEntity;
+import com.orange1988.photoselector.entity.PSPhotoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class PSManager {
 
     private static PSManager instance;
 
-    private List<PhotoEntity> photos;
+    private List<PSPhotoEntity> photos;
 
     public static PSManager getInstance() {
         if (instance == null) {
@@ -25,11 +25,11 @@ public class PSManager {
         photos = new ArrayList<>();
     }
 
-    public List<PhotoEntity> getPhotos() {
+    public List<PSPhotoEntity> getPhotos() {
         return photos;
     }
 
-    public boolean addPhoto(PhotoEntity photo) {
+    public boolean addPhoto(PSPhotoEntity photo) {
         if (photo == null) {
             return false;
         }
@@ -39,11 +39,11 @@ public class PSManager {
         return photos.add(photo);
     }
 
-    public boolean remove(PhotoEntity photo) {
+    public boolean remove(PSPhotoEntity photo) {
         if (photo == null) {
             return false;
         }
-        for (PhotoEntity pe : photos) {
+        for (PSPhotoEntity pe : photos) {
             if (pe.equals(photo)) {
                 return photos.remove(pe);
             }
@@ -55,11 +55,11 @@ public class PSManager {
         photos.clear();
     }
 
-    public boolean contain(PhotoEntity photo) {
+    public boolean contain(PSPhotoEntity photo) {
         if (photo == null) {
             return false;
         }
-        for (PhotoEntity pe : photos) {
+        for (PSPhotoEntity pe : photos) {
             if (pe.equals(photo)) {
                 return true;
             }
@@ -68,10 +68,10 @@ public class PSManager {
         return false;
     }
 
-    public List<PhotoEntity> copyPhotos() {
-        List<PhotoEntity> list = new ArrayList<>();
-        PhotoEntity newPhoto;
-        for (PhotoEntity photo : photos) {
+    public List<PSPhotoEntity> copyPhotos() {
+        List<PSPhotoEntity> list = new ArrayList<>();
+        PSPhotoEntity newPhoto;
+        for (PSPhotoEntity photo : photos) {
             newPhoto = photo.copy();
             list.add(newPhoto);
         }
