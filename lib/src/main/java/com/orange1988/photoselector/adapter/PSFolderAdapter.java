@@ -30,7 +30,7 @@ public class PSFolderAdapter extends PSBaseListAdapter<PSFolderEntity> {
 
     @Override
     public PSViewHolder getViewHolder(int position, View convertView) {
-        return new ViewHolder( convertView);
+        return new ViewHolder(convertView);
     }
 
     @Override
@@ -40,11 +40,7 @@ public class PSFolderAdapter extends PSBaseListAdapter<PSFolderEntity> {
 
     public void update(PSFolderEntity folderEntity) {
         for (PSFolderEntity folder : items) {
-            if (folder.equals(folderEntity)) {
-                folder.isChecked = true;
-            } else {
-                folder.isChecked = false;
-            }
+            folder.isChecked = folder.equals(folderEntity);
         }
     }
 

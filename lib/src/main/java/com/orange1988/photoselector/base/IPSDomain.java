@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface IPSDomain<T> {
 
-
-
     public abstract List<T> getItems();
 
 }
